@@ -1,0 +1,9 @@
+.message {
+    display: grid;
+    grid-template-columns: 1fr 20fr;
+    margin: 10px;
+}
+
+.message_icon img {
+    height: 60px;
+}

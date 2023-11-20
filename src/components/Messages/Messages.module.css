@@ -1,0 +1,46 @@
+.dialogs_list {
+    list-style: none;
+    text-align: center;
+    padding-top: 30px;
+}
+
+.dialogs_description {
+    padding: 0 0 0 10px;
+    background-color: red;
+}
+
+.dialogs_list li {
+    margin: 5px;
+}
+
+.dialogs_list li a {
+    color: #000;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.dialogs_list li a:hover {
+    text-decoration: underline;
+}
+
+
+
+.page_description {
+    text-align: center;
+}
+
+.messages {
+    display: grid;
+    grid-template-columns: 1fr 8fr;
+    /*grid-template-rows: 1fr 10fr;*/
+    grid-template-areas: "dialogs message_bar";
+}
+
+.dialogs {
+    grid-area: dialogs;
+}
+
+.message_bar {
+    grid-area: message_bar;
+}
+

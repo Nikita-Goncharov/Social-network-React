@@ -1,0 +1,18 @@
+.navbar {
+    grid-area: nav;
+    background-color: darkslategray;
+}
+
+.navbar ul {
+    padding-top: 20px;
+    list-style: none;
+}
+
+.navbar li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar li a.active {
+    color: darkorange;
+}
