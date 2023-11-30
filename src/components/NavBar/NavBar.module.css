@@ -1,6 +1,6 @@
 .navbar {
     grid-area: nav;
-    background-color: darkslategray;
+    background-color: #414243;
 }
 
 .navbar ul {

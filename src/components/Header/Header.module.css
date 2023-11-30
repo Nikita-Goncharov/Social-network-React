@@ -1,8 +1,19 @@
 .header {
     grid-area: header;
-    background-color: deepskyblue;
+    background-color: #81ACBD;
+}
+
+.header div {
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
 
 .header img {
-    width: 60px;
+    vertical-align: middle;
+    width: 50px;
+}
+
+.header h2 {
+    display: inline;
 }

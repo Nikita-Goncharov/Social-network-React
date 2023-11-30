@@ -3,13 +3,13 @@ import Header from './components/Header/Header'
 import NavBar from './components/NavBar/NavBar'
 import MainContent from "./components/MainContent/MainContent";
 import {BrowserRouter} from "react-router-dom";
-function App() {
+function App({store}) {
   return (
     <BrowserRouter>
       <div className='app-wrapper'>
         <Header />
         <NavBar />
-        <MainContent />
+        <MainContent store={store}/>
       </div>
     </BrowserRouter>
   );
