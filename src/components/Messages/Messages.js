@@ -10,10 +10,7 @@ const DialogLink = (props) => {
   )
 }
 
-const Messages = ({messagePage, dispatch}) => {
-
-
-
+const Messages = ({ dialogs, messages, newMessageText, sendMessage, updateNewMessageText }) => {
   return (
       <>
         <h2 className={styles.page_description}>Your messages</h2>
@@ -21,12 +18,15 @@ const Messages = ({messagePage, dispatch}) => {
           <div className={styles.dialogs}>
             <div className={styles.dialogs_description}><h4>Dialogs</h4></div>
             <ul className={styles.dialogs_list}>
-              {messagePage.dialogs.map(({id, name}) => <DialogLink name={name} id={id}/>)}
+              {dialogs.map(({id, name}) => <DialogLink name={name} key={id} id={id}/>)}
             </ul>
           </div>
           <div className={styles.message_bar}>
-            {messagePage.messages.map(({id, user_name, text}) => <Message message_user_name={user_name} message_text={text} id={id}/>)}
-            <SendMessage dispatch={dispatch} newMessageText={messagePage.newMessageText} />
+            {messages.map(({id, user_name, text}) => <Message message_user_name={user_name} message_text={text} key={id} id={id}/>)}
+            <SendMessage sendMessage={sendMessage}
+                         updateNewMessageText={updateNewMessageText}
+                         newMessageText={newMessageText}
+            />
           </div>
         </div>
       </>

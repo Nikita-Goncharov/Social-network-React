@@ -1,21 +1,18 @@
 import React from "react";
-import {sendMessageActionCreator, updateNewMessageTextActionCreator} from "../../../redux/state";
 
-const SendMessage = ({dispatch, newMessageText}) => {
-  let textareaMessage = React.createRef()
-
+const SendMessage = ({ sendMessage, updateNewMessageText, newMessageText }) => {
   const sendMessageCallback = () => {
-    dispatch(sendMessageActionCreator())
+    sendMessage()
   }
 
-  const updateNewMessageTextCallback = () => {
-    let text = textareaMessage.current.value
-    dispatch(updateNewMessageTextActionCreator(text))
+  const updateNewMessageTextCallback = (e) => {
+    updateNewMessageText(e.target.value)
   }
+
 
   return (
       <>
-        <textarea ref={textareaMessage} onChange={updateNewMessageTextCallback} value={newMessageText}></textarea><br/>
+        <textarea onChange={updateNewMessageTextCallback} value={newMessageText}></textarea><br/>
         <button type="button" onClick={sendMessageCallback}>Send message</button>
       </>
   )

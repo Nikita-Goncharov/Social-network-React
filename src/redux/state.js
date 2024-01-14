@@ -1,16 +1,11 @@
-const img_path = "https://aui.atlassian.com/aui/8.8/docs/images/avatar-person.svg"
+import profileReducer, {img_path} from "./profileReducer";
+import messagesReducer from "./messagesReducer";
 
 const basic_text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
   Nam arcu velit, dapibus vitae pretium vitae, hendrerit a dolor. Mauris eget dictum arcu.
   Aenean facilisis aliquam purus.
   Pellentesque pulvinar, est at blandit egestas, nibh turpis scelerisque ex, nec feugiat ipsum est non tortor.
   Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut vehicula tortor id ipsum elementum tempus.`
-
-
-const ADD_POST = "ADD-POST"
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
-const SEND_MESSAGE = "SEND-MESSAGE"
-const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT"
 
 
 const store = {
@@ -54,59 +49,11 @@ const store = {
     this._rerenderUI = observer
   },
 
-  _addPost() {
-    let newPost = {
-      id: "5",
-      img_path: img_path,
-      text: this._state.profilePage.newPostText
-    }
-    this._state.profilePage.posts.push(newPost)
-    this._rerenderUI(this)
-  },
-
-  _changeNewPostText(newText) {
-    this._state.profilePage.newPostText = newText
-    this._rerenderUI(this)
-  },
-
-
-  _sendMessage() {
-    let newMessage = {
-      id: "77", user_name: "Me", text: this._state.messagePage.newMessageText
-    }
-
-    this._state.messagePage.messages.push(newMessage)
-    this._rerenderUI(this)
-  },
-
-  _changeNewMessageText(newText) {
-    this._state.messagePage.newMessageText = newText
-    this._rerenderUI(this)
-  },
-
   dispatch(action) {
-    if (action.type === ADD_POST) {
-      this._addPost()
-    } else if (action.type === UPDATE_NEW_POST_TEXT) {
-      this._changeNewPostText(action.newText)
-    } else if (action.type === SEND_MESSAGE) {
-      this._sendMessage()
-    } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
-      this._changeNewMessageText(action.newText)
-    }
+    this._state.profilePage = profileReducer(this._state.profilePage, action)
+    this._state.messagePage = messagesReducer(this._state.messagePage, action)
+    this._rerenderUI(this)
   }
 }
-
-export const addPostActionCreator = () => ({type: ADD_POST})
-
-export const updateNewPostTextActionCreator = text => (
-    {type: UPDATE_NEW_POST_TEXT, newText: text}
-)
-
-export const sendMessageActionCreator = () => ({type: SEND_MESSAGE})
-
-export const updateNewMessageTextActionCreator = text => (
-  {type: UPDATE_NEW_MESSAGE_TEXT, newText: text}
-)
 
 export default store

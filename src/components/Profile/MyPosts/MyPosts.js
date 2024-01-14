@@ -1,18 +1,13 @@
 import React from "react";
 import Post from "./Post/Post"
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/state";
 
-const MyPosts = ({profilePage, dispatch}) => {
-
-  let textareaAddPost = React.createRef()
-
+const MyPosts = ({newPostText, posts, addPost, changeNewPostText}) => {
   let addPostCallback = () => {
-      dispatch(addPostActionCreator())
+    addPost()
   }
 
-  let changeNewPostTextCallback = () => {
-    let text = textareaAddPost.current.value
-    dispatch(updateNewPostTextActionCreator(text))
+  let changeNewPostTextCallback = (e) => {
+    changeNewPostText(e.target.value)
   }
 
   return (
@@ -20,11 +15,11 @@ const MyPosts = ({profilePage, dispatch}) => {
         <h3>My posts</h3>
         <div>
           <h2>New post</h2>
-          <textarea ref={textareaAddPost} onChange={changeNewPostTextCallback} value={profilePage.newPostText} /><br/>
+          <textarea onChange={changeNewPostTextCallback} value={newPostText} /><br/>
           <button onClick={addPostCallback}>Add post</button>
         </div>
         <div className="posts">
-          {profilePage.posts.map(({id, img_path, text}) => <Post id={id} img_path={img_path} message={text}/>)}
+          {posts.map(({id, img_path, text}) => <Post id={id} key={id} img_path={img_path} message={text}/>)}
         </div>
       </div>
   )

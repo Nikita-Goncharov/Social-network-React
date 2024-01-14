@@ -1,0 +1,22 @@
+.page_description {
+    text-align: center;
+}
+
+.users_management {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 8fr 1fr;
+    grid-template-areas: "users" "show_more";
+}
+
+.users {
+    grid-area: users;
+}
+
+.users ul {
+    list-style: none;
+}
+
+.show_more {
+    grid-area: show_more;
+}

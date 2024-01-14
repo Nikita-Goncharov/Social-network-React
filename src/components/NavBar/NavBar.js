@@ -6,8 +6,9 @@ const NavBar = () => {
         <ul>
           <li><NavLink to="/home" className={({isActive}) => isActive ? styles.active : ''}>Home</NavLink></li>
           <li><NavLink to="/profile" className={({isActive}) => isActive ? styles.active : ''}>Profile</NavLink></li>
-          <li><NavLink to="/settings" className={({isActive}) => isActive ? styles.active : ''}>Settings</NavLink></li>
           <li><NavLink to="/messages" className={({isActive}) => isActive ? styles.active : ''}>Messages</NavLink></li>
+          <li><NavLink to="/find_users" className={({isActive}) => isActive ? styles.active : ''}>Find users</NavLink></li>
+          <li><NavLink to="/settings" className={({isActive}) => isActive ? styles.active : ''}>Settings</NavLink></li>
         </ul>
       </nav>
   )
