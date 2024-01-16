@@ -1,0 +1,43 @@
+.page_description {
+    text-align: center;
+}
+
+.users_management {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 8fr 1fr;
+    grid-template-areas: "users" "show_more";
+}
+
+.users {
+    grid-area: users;
+}
+
+.users ul {
+    list-style: none;
+}
+
+.show_more {
+    grid-area: show_more;
+}
+
+.pagination_menu span {
+    padding: 4px 10px;
+    margin: 5px;
+    cursor: pointer;
+    background-color: #81ACBD;
+    font-size: 24px;
+    display: inline-block;
+}
+
+.pagination_menu span:first-child {
+    margin-left: 20px;
+}
+
+.pagination_menu span:hover {
+    transform: scale(1.3);
+}
+
+.activePage {
+    font-weight: bold;
+}
