@@ -24,13 +24,13 @@ class UsersAPIContainer extends React.Component {
     if (this.props.users.length === 0) {
       this.props.fetching(true)
       axios.get(
-          `http://localhost:8080/api/v0.1/users?page=${this.props.currentPage}&count=${this.props.countUsersOnPage}`
+          `http://localhost:8080/api/v0.2/profiles?page=${this.props.currentPage}&count=${this.props.countUsersOnPage}`
       ).then(response => {
         if (response.status === 200) {
-          let data = JSON.parse(response.data)
-          this.props.setUsers(data.users)
-          this.props.setTotalUsersCount(data.total_count)
-          this.props.setPagesCount(Math.ceil(data.total_count / this.props.countUsersOnPage))
+          // console.log(response.data)
+          this.props.setUsers(response.data.profiles)
+          this.props.setTotalUsersCount(response.data.total_count)
+          this.props.setPagesCount(Math.ceil(response.data.total_count / this.props.countUsersOnPage))
           this.props.fetching(false)
         } else {
           console.log("Error response")
@@ -43,11 +43,10 @@ class UsersAPIContainer extends React.Component {
     this.props.setCurrentPage(currentPage)
     this.props.fetching(true)
     axios.get(
-        `http://localhost:8080/api/v0.1/users?page=${currentPage}&count=${this.props.countUsersOnPage}`
+        `http://localhost:8080/api/v0.2/profiles?page=${currentPage}&count=${this.props.countUsersOnPage}`
     ).then(response => {
       if (response.status === 200) {
-        let data = JSON.parse(response.data)
-        this.props.setUsers(data.users)
+        this.props.setUsers(response.data.profiles)
         this.props.fetching(false)
       } else {
         console.log("Error response")

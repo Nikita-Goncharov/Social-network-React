@@ -27,6 +27,7 @@ const findUsersReducer = (state = initialState, action) => {
         }
         return user
       })
+
       return {
         ...state,
         users: usersCopy

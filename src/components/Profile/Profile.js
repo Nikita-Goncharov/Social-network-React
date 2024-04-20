@@ -1,30 +1,31 @@
 import styles from './Profile.module.css'
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 
-
-const ProfileInfo = () => {
+const ProfileInfo = (props) => {
   return (
       <div className={styles.profile_info}>
         <div className={styles.profile_img}>
-          <img src="https://cdn-icons-png.flaticon.com/128/9131/9131529.png" alt=""/>
+          <img src={props.profile_data.img} alt=""/>
         </div>
         <div className={styles.profile_desc}>
-          <h3>Date of birth: </h3>
-          <h3>City: </h3>
-          <h3>Education: </h3>
-          <h3>Web Site: </h3>
+          <h2>{props.profile_data.username}</h2>
+          <p>Status: {props.profile_data.status}</p>
+          <h3>Date of birth: {props.profile_data.birth_date}</h3>
+          <h3>City: {props.profile_data.city}</h3>
+          <h3>Education: {props.profile_data.education}</h3>
+          <h3>Web Site: {props.profile_data.web_site}</h3>
         </div>
       </div>
   )
 }
 
-const Profile = () => {
+const Profile = (props) => {
   return (
       <div className={styles.profile}>
         <div className={styles.poster}>
           <img src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg" alt=""/>
         </div>
-        <ProfileInfo />
+        <ProfileInfo profile_data={props.profile_data}/>
         <MyPostsContainer className={styles.posts} />
       </div>
   )

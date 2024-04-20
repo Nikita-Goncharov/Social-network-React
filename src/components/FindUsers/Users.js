@@ -2,6 +2,7 @@ import styles from "./Users.module.css"
 import User from "./User/User"
 import Loader from "../common/Loader/Loader";
 
+
 function Users(props) {
   let pagesList = []
   for (let i = 1; i <= props.pagesCount; i++) {
@@ -15,16 +16,13 @@ function Users(props) {
             return <span key={page} className={props.currentPage === page ? styles.activePage : styles.ordinaryPage} onClick={() => props.changeCurrentPage(page)}>{page}</span>
           })}
         </div>
-        {props.isFetching ? <Loader /> : <></>}
+        {props.isFetching && <Loader />}
         <div className={styles.users_management}>
           <div className={styles.users}>
             <ul>
               {props.users.map(user => <li key={user.id}><User user={user} followUser={props.followUser}/></li>)}
             </ul>
           </div>
-          {/*<div className={styles.show_more}>*/}
-          {/*  <button>Show more</button>*/}
-          {/*</div>*/}
         </div>
       </>
   )
