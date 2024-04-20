@@ -6,6 +6,8 @@ import Page404 from "../ErrorPages/Page404"
 import MessagesContainer from "../Messages/MessagesContainer";
 import FindUsersContainer from "../FindUsers/FindUsersContainer"
 import ProfileContainer from "../Profile/ProfileContainer";
+import LoginUserContainer from "../LoginUser/LoginUserContainer";
+import RegisterUser from "../RegisterUser/RegisterUser";
 
 const MainContent = () => {
   return (
@@ -19,6 +21,10 @@ const MainContent = () => {
           <Route element={<Settings />} path="/settings"/>
           <Route element={<MessagesContainer />} path="/messages"/>
           <Route element={<FindUsersContainer />} path="/find_users"/>
+
+          <Route element={<RegisterUser />} path="/register"/>
+          <Route element={<LoginUserContainer />} path="/login"/>
+          {/*<Route element={<LogoutUser />} path="/logout"/>*/}
           <Route element={<Page404 />} path="*"/>
         </Routes>
       </div>
