@@ -4,9 +4,19 @@ const UPDATE_INPUT_VALUES = "UPDATE-INPUT-VALUES"
 
 const initialState = {
   logged_user: {
+    username: "",
     email: "",
     token: "",
-    isAuthenticated: false
+    isAuthorized: false,
+    profile: {
+      img: "",
+      status: "",
+      education: "",
+      web_site: "",
+      country: "",
+      city: "",
+      birth_date: ""
+    }
   },
   currentInputValues: {
     email: "",
@@ -20,9 +30,19 @@ const ownUserReducer = (state=initialState, action) => {
       return {
         ...state,
         logged_user: {
+          username: action.username,
           email: action.email,
           token: action.token,
-          isAuthenticated: true
+          isAuthorized: true,
+          profile: {
+            img: action.img,
+            status: action.status,
+            education: action.education,
+            web_site: action.web_site,
+            country: action.country,
+            city: action.city,
+            birth_date: action.birth_date
+          }
         }
       }
     case LOGOUT_USER:
@@ -31,7 +51,16 @@ const ownUserReducer = (state=initialState, action) => {
         logged_user: {
           email: "",
           token: "",
-          isAuthenticated: false
+          isAuthorized: false,
+          profile: {
+            img: "",
+            status: "",
+            education: "",
+            web_site: "",
+            country: "",
+            city: "",
+            birth_date: ""
+          }
         }
       }
     case UPDATE_INPUT_VALUES:
@@ -47,9 +76,21 @@ const ownUserReducer = (state=initialState, action) => {
   }
 }
 
-export const loginUserAC = (email, token) => ({
-  type: LOGIN_USER, email, token
-})
+export const loginUserAC = (user_data, profile_data) => {
+  return {
+    type: LOGIN_USER,
+    username: user_data.username,
+    email: user_data.email,
+    token: user_data.token,
+    img: profile_data.img,
+    status: profile_data.status,
+    education: profile_data.education,
+    web_site: profile_data.web_site,
+    country: profile_data.country,
+    city: profile_data.city,
+    birth_date: profile_data.birth_date
+  }
+}
 
 export const logoutUserAC = () => ({
   type: LOGOUT_USER

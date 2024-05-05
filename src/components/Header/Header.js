@@ -2,7 +2,10 @@ import React from "react";
 import styles from './Header.module.css'
 import {NavLink} from "react-router-dom";
 
-function Header() {
+function Header(props) {
+  let registerButton = <NavLink className={styles.register_link} to="/register">Register</NavLink>
+  let loginButton = <NavLink className={styles.login_link} to="/login">Login</NavLink>
+  let logoutButton = <NavLink className={styles.logout_link} to="/logout">Logout</NavLink>
   return (
     <header className={styles.header}>
       <div>
@@ -11,9 +14,9 @@ function Header() {
           <img src="https://cdn-icons-png.flaticon.com/128/5968/5968771.png" alt="Logo"/>
         </div>
         <div className={styles.authorization_links}>
-          <NavLink className={styles.register_link} to="/register">Register</NavLink>
-          <NavLink className={styles.login_link} to="/login">Login</NavLink>
-          {/*/!*<NavLink className={styles.logout_link} to="/logout">Logout</NavLink>*!/  TODO: logout option */}
+          {!props.isAuthorized && registerButton}
+          {!props.isAuthorized && loginButton}
+          {props.isAuthorized && logoutButton}
         </div>
       </div>
     </header>
