@@ -20,8 +20,9 @@ const createUserReducer = (state=initial_state, action) => {
         password1: action.password1,
         password2: action.password2
       }
+    default:
+      return state
   }
-  return state
 }
 
 export const setNewUserDataAC = (username, email, password1, password2) => ({

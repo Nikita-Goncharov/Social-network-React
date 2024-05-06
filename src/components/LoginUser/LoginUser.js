@@ -1,3 +1,5 @@
+import styles from "./LoginUser.module.css"
+
 function LoginUser(props) {
 
   const updateInputValuesCallback = (e) => {
@@ -9,9 +11,12 @@ function LoginUser(props) {
   }
 
   return <>
+    <form className={styles.login_form} onSubmit={props.loginUserAPICall}>
       <input onChange={updateInputValuesCallback} type="text" name="email" placeholder="Email" value={props.email}/>
-      <input onChange={updateInputValuesCallback} type="password" name="password" placeholder="Password" value={props.password}/>
-      <button onClick={props.loginUserAPICall}>Login</button>
+      <input onChange={updateInputValuesCallback} type="password" name="password" placeholder="Password"
+             value={props.password}/>
+      <button type="submit">Login</button>
+    </form>
   </>
 }
 

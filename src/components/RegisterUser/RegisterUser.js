@@ -1,3 +1,5 @@
+import styles from "./RegisterUser.module.css"
+
 function RegisterUser(props) {
 
   const updateInputValuesCallback = (e) => {
@@ -10,7 +12,7 @@ function RegisterUser(props) {
   }
 
   return <>
-    <form onSubmit={props.registerUserCallback}>
+    <form className={styles.register_form} onSubmit={props.registerUserCallback}>
       <input onChange={updateInputValuesCallback} value={props.username} type="text" name="username" placeholder="Username"/>
       <input onChange={updateInputValuesCallback} value={props.email} type="text" name="email" placeholder="Email"/>
       <input onChange={updateInputValuesCallback} value={props.password1} type="password" name="password1" placeholder="Password 1"/>

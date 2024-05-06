@@ -1,0 +1,12 @@
+.login_form {
+    width: 40%;
+    margin: 30px auto;
+}
+
+.login_form > * {
+    display: block;
+    margin: 10px 5px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+}

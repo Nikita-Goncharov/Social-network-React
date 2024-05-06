@@ -1,6 +1,5 @@
 import React from "react"
 import {connect} from "react-redux";
-import axios from "axios";
 
 import Users from "./Users";
 import {
@@ -22,36 +21,32 @@ class UsersAPIContainer extends React.Component {
 
   componentDidMount() {
     if (this.props.users.length === 0) {
+      debugger
       this.props.fetching(true)
-      axios.get(
-          `http://localhost:8080/api/v0.2/profiles?page=${this.props.currentPage}&count=${this.props.countUsersOnPage}`
-      ).then(response => {
-        if (response.status === 200) {
-          // console.log(response.data)
-          this.props.setUsers(response.data.profiles)
-          this.props.setTotalUsersCount(response.data.total_count)
-          this.props.setPagesCount(Math.ceil(response.data.total_count / this.props.countUsersOnPage))
-          this.props.fetching(false)
-        } else {
-          console.log("Error response")
-        }
-      })
+      fetch(
+        `http://localhost:8080/api/v0.2/profiles?page=${this.props.currentPage}&count=${this.props.countUsersOnPage}`
+      ).then(
+        response => response.json()
+      ).then(responseJSON => {
+        this.props.setUsers(responseJSON.profiles)
+        this.props.setTotalUsersCount(responseJSON.total_count)
+        this.props.setPagesCount(Math.ceil(responseJSON.total_count / this.props.countUsersOnPage))
+        this.props.fetching(false)
+      }).catch(err => console.log("Error occurred!"))
     }
   }
 
   changeCurrentPage(currentPage) {
     this.props.setCurrentPage(currentPage)
     this.props.fetching(true)
-    axios.get(
-        `http://localhost:8080/api/v0.2/profiles?page=${currentPage}&count=${this.props.countUsersOnPage}`
-    ).then(response => {
-      if (response.status === 200) {
-        this.props.setUsers(response.data.profiles)
-        this.props.fetching(false)
-      } else {
-        console.log("Error response")
-      }
-    })
+    fetch(
+      `http://localhost:8080/api/v0.2/profiles?page=${currentPage}&count=${this.props.countUsersOnPage}`
+    ).then(
+      response => response.json()
+    ).then(responseJSON => {
+      this.props.setUsers(responseJSON.profiles)
+      this.props.fetching(false)
+    }).catch(err => console.log("Error occurred!"))
   }
 
   render() {

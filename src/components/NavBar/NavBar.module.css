@@ -1,6 +1,7 @@
 .navbar {
     grid-area: nav;
     background-color: #414243;
+    min-height: 100vh;
 }
 
 .navbar ul {

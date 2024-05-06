@@ -1,4 +1,3 @@
-import {redirect} from "react-router-dom";
 import {useCookies} from "react-cookie";
 import {connect} from "react-redux";
 import {useEffect} from "react";

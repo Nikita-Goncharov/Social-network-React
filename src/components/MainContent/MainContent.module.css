@@ -1,4 +1,5 @@
 .main_content {
     grid-area: content;
     background-color: #EFEEEE;
+    min-height: 100vh;
 }
