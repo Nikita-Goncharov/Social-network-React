@@ -7,7 +7,7 @@ const basic_text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
   Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut vehicula tortor id ipsum elementum tempus.`
 
 
-let initialState = {
+const initialState = {
   messages: [
     {id: 1, user_name: "Dmitry", text: basic_text},
     {id: 2, user_name: "Dmitry", text: basic_text},
@@ -28,7 +28,7 @@ let initialState = {
 
 const messagesReducer = (state=initialState, action) => {
   if (action.type === SEND_MESSAGE) {
-    let lastMessageId = state.messages[state.messages.length-1].id
+    const lastMessageId = state.messages[state.messages.length-1].id
     return {
       ...state,
       messages: [...state.messages, {id: lastMessageId+1, user_name: "Me", text: state.newMessageText}],

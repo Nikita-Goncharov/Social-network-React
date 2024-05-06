@@ -11,12 +11,12 @@ function LoginUser(props) {
   }
 
   return <>
-    <form className={styles.login_form} onSubmit={props.loginUserAPICall}>
+    <div className={styles.login_form}>
       <input onChange={updateInputValuesCallback} type="text" name="email" placeholder="Email" value={props.email}/>
       <input onChange={updateInputValuesCallback} type="password" name="password" placeholder="Password"
              value={props.password}/>
-      <button type="submit">Login</button>
-    </form>
+      <button onClick={props.loginUserAPICall}>Login</button>
+    </div>
   </>
 }
 

@@ -19,13 +19,14 @@ function AppContainerLoginUser(props) {
 
         if (responseWhoAmI.status === 200) {
           let responseWhoAmIBody = await responseWhoAmI.json()
-          responseWhoAmIBody = responseWhoAmIBody.data
-          let user_data = {
-            username: responseWhoAmIBody.username,
-            email: responseWhoAmIBody.email,
-            token: responseWhoAmIBody.token
+          const user_data = {
+            profile_id: responseWhoAmIBody.profile.user.id,
+            username: responseWhoAmIBody.profile.user.username,
+            email: responseWhoAmIBody.profile.user.email,
+            token: responseWhoAmIBody.profile.user.token
           }
-          let profile_data = {
+          const profile_data = {
+            profile_id: responseWhoAmIBody.profile.id,
             img: responseWhoAmIBody.profile.img,
             status: responseWhoAmIBody.profile.status,
             education: responseWhoAmIBody.profile.education,

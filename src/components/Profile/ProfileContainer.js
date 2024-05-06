@@ -14,8 +14,23 @@ class ProfileAPIContainer extends React.Component {
             let response  = await fetch(`http://localhost:8080/api/v0.2/profile?profile_id=${userId}`)
             if (response.status === 200) {
                 let responseJSON = await response.json()
-                let profile_data = responseJSON.profile
-                this.props.updateProfile(profile_data)
+                const user_data = {
+                    profile_id: responseJSON.profile.user.id,
+                    username: responseJSON.profile.user.username,
+                    email: responseJSON.profile.user.email
+                }
+                const profile_data = {
+                    profile_id: responseJSON.profile.id,
+                    img: responseJSON.profile.img,
+                    status: responseJSON.profile.status,
+                    education: responseJSON.profile.education,
+                    web_site: responseJSON.profile.web_site,
+                    country: responseJSON.profile.country,
+                    city: responseJSON.profile.city,
+                    birth_date: responseJSON.profile.birth_date
+                }
+
+                this.props.updateProfile(user_data, profile_data)
             }
         })()
     }
@@ -26,11 +41,11 @@ class ProfileAPIContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => (
-    {profile: state.profilePage}
+    {profile: state.profilePage.profile}
 )
 
 const mapDispatchToProps = (dispatch) => (
-    {updateProfile: new_profile_data => dispatch(updateProfileDataActionCreator(new_profile_data))}
+    {updateProfile: (user_data, profile_data) => dispatch(updateProfileDataActionCreator(user_data, profile_data))}
 )
 
 const ProfileContainerWithParams = customWithRouter(ProfileAPIContainer)

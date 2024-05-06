@@ -3,19 +3,21 @@ const LOGOUT_USER = "LOGOUT-USER"
 const UPDATE_INPUT_VALUES = "UPDATE-INPUT-VALUES"
 
 const initialState = {
-  logged_user: {
-    username: "",
-    email: "",
-    token: "",
-    isAuthorized: false,
-    profile: {
-      img: "",
-      status: "",
-      education: "",
-      web_site: "",
-      country: "",
-      city: "",
-      birth_date: ""
+  profile: {
+    id: 0,
+    img: "",
+    status: "",
+    education: "",
+    web_site: "",
+    country: "",
+    city: "",
+    birth_date: "",
+    user: {
+      id: 0,
+      username: "",
+      email: "",
+      token: "",
+      isAuthorized: false
     }
   },
   currentInputValues: {
@@ -29,37 +31,42 @@ const ownUserReducer = (state=initialState, action) => {
     case LOGIN_USER:
       return {
         ...state,
-        logged_user: {
-          username: action.username,
-          email: action.email,
-          token: action.token,
-          isAuthorized: true,
-          profile: {
-            img: action.img,
-            status: action.status,
-            education: action.education,
-            web_site: action.web_site,
-            country: action.country,
-            city: action.city,
-            birth_date: action.birth_date
+        profile: {
+          id: action.profile_id,
+          img: action.img,
+          status: action.status,
+          education: action.education,
+          web_site: action.web_site,
+          country: action.country,
+          city: action.city,
+          birth_date: action.birth_date,
+          user: {
+            id: action.user_id,
+            username: action.username,
+            email: action.email,
+            token: action.token,
+            isAuthorized: true
           }
         }
       }
     case LOGOUT_USER:
       return {
         ...state,
-        logged_user: {
-          email: "",
-          token: "",
-          isAuthorized: false,
-          profile: {
-            img: "",
-            status: "",
-            education: "",
-            web_site: "",
-            country: "",
-            city: "",
-            birth_date: ""
+        profile: {
+          id: 0,
+          img: "",
+          status: "",
+          education: "",
+          web_site: "",
+          country: "",
+          city: "",
+          birth_date: "",
+          user: {
+            id: 0,
+            username: "",
+            email: "",
+            token: "",
+            isAuthorized: false
           }
         }
       }
@@ -79,16 +86,19 @@ const ownUserReducer = (state=initialState, action) => {
 export const loginUserAC = (user_data, profile_data) => {
   return {
     type: LOGIN_USER,
-    username: user_data.username,
-    email: user_data.email,
-    token: user_data.token,
+    profile_id: profile_data.profile_id,
     img: profile_data.img,
     status: profile_data.status,
     education: profile_data.education,
     web_site: profile_data.web_site,
     country: profile_data.country,
     city: profile_data.city,
-    birth_date: profile_data.birth_date
+    birth_date: profile_data.birth_date,
+
+    user_id: user_data.user_id,
+    username: user_data.username,
+    email: user_data.email,
+    token: user_data.token,
   }
 }
 

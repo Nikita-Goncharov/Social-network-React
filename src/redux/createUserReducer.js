@@ -2,7 +2,7 @@
 
 const SET_NEW_USER_DATA = "SET-NEW-USER-DATA"
 
-const initial_state = {
+const initialState = {
   username: "",
   email: "",
   password1: "",
@@ -10,7 +10,7 @@ const initial_state = {
 }
 
 
-const createUserReducer = (state=initial_state, action) => {
+const createUserReducer = (state=initialState, action) => {
   switch(action.type) {
     case SET_NEW_USER_DATA:
       return {

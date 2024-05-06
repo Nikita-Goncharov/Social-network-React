@@ -21,7 +21,6 @@ class UsersAPIContainer extends React.Component {
 
   componentDidMount() {
     if (this.props.users.length === 0) {
-      debugger
       this.props.fetching(true)
       fetch(
         `http://localhost:8080/api/v0.2/profiles?page=${this.props.currentPage}&count=${this.props.countUsersOnPage}`

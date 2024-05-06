@@ -12,13 +12,13 @@ function RegisterUser(props) {
   }
 
   return <>
-    <form className={styles.register_form} onSubmit={props.registerUserCallback}>
+    <div className={styles.register_form}>
       <input onChange={updateInputValuesCallback} value={props.username} type="text" name="username" placeholder="Username"/>
       <input onChange={updateInputValuesCallback} value={props.email} type="text" name="email" placeholder="Email"/>
       <input onChange={updateInputValuesCallback} value={props.password1} type="password" name="password1" placeholder="Password 1"/>
       <input onChange={updateInputValuesCallback} value={props.password2} type="password" name="password2" placeholder="Password 2"/>
-      <button type="submit">Register</button>
-    </form>
+      <button onClick={props.registerUserCallback}>Register</button>
+    </div>
   </>
 }
 
