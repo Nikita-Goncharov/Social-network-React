@@ -2,7 +2,7 @@ import React from "react";
 import Profile from "./Profile";
 import {updateProfileDataActionCreator} from "../../redux/profileReducer";
 import {connect} from "react-redux";
-import customWithRouter from "../common/customWithRouter/customWithRouter"
+import customWithParams from "../common/customWithParams/customWithParams"
 
 class ProfileAPIContainer extends React.Component {
     componentDidMount() {
@@ -48,7 +48,7 @@ const mapDispatchToProps = (dispatch) => (
     {updateProfile: (user_data, profile_data) => dispatch(updateProfileDataActionCreator(user_data, profile_data))}
 )
 
-const ProfileContainerWithParams = customWithRouter(ProfileAPIContainer)
+const ProfileContainerWithParams = customWithParams(ProfileAPIContainer)
 const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(ProfileContainerWithParams)
 
 

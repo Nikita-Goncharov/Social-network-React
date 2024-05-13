@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {setCurrentLoginInputValuesAC, loginUserAC} from "../../redux/ownUserReducer";
 import {useCookies} from "react-cookie";
 
+
 function LoginUserContainer(props) {
   const [cookies, setCookie] = useCookies()
   const loginUserAPICall = async () => {
@@ -21,7 +22,7 @@ function LoginUserContainer(props) {
       if (responseWhoAmI.status === 200) {
         let responseWhoAmIBody = await responseWhoAmI.json()
         const user_data = {
-          profile_id: responseWhoAmIBody.profile.user.id,
+          user_id: responseWhoAmIBody.profile.user.id,
           username: responseWhoAmIBody.profile.user.username,
           email: responseWhoAmIBody.profile.user.email,
           token: responseWhoAmIBody.profile.user.token

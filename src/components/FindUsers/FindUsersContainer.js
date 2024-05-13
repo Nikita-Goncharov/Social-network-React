@@ -20,7 +20,7 @@ class UsersAPIContainer extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.users.length === 0) {
+    if (this.props.profiles.length === 0) {
       this.props.fetching(true)
       fetch(
         `http://localhost:8080/api/v0.2/profiles?page=${this.props.currentPage}&count=${this.props.countUsersOnPage}`
@@ -54,7 +54,7 @@ class UsersAPIContainer extends React.Component {
             changeCurrentPage={this.changeCurrentPage}
             currentPage={this.props.currentPage}
             pagesCount={this.props.pagesCount}
-            users={this.props.users}
+            profiles={this.props.profiles}
             followUser={this.props.followUser}
             isFetching={this.props.isFetching}
         />
@@ -65,7 +65,7 @@ class UsersAPIContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    users: state.findUsers.users,
+    profiles: state.findUsers.users,
     pagesCount: state.findUsers.pagesCount,
     currentPage: state.findUsers.currentPage,
     totalUsers: state.findUsers.totalUsers,

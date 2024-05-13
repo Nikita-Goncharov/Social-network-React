@@ -1,7 +1,6 @@
 import styles from "./LoginUser.module.css"
 
 function LoginUser(props) {
-
   const updateInputValuesCallback = (e) => {
     if (e.target.name === "email") {
       props.updateInputValues(e.target.value, props.password)

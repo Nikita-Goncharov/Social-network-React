@@ -12,18 +12,18 @@ function LogoutUserAPIContainer(props) {
   const [cookies, setCookie, removeCookie] = useCookies()
   useEffect(() => {
     if (props.isAuthorized) {
-      console.log("LOGOUT", props.isAuthorized)
       removeCookie("Authorization")
       async function logoutUserAPI() {
         let response = await fetch(
           "http://localhost:8080/api/v0.2/logout",
           {method: "POST", headers: {"Authorization": props.userAuthToken}})
-        if (response.status !== 200) {
+        if (response.status === 200) {
+          props.logoutUser()
+        } else {
           console.log("User was not logout in API")
         }
       }
       logoutUserAPI()
-      props.logoutUser()
     }
   }, []);
   return <LogoutUserRedirect />
@@ -31,7 +31,8 @@ function LogoutUserAPIContainer(props) {
 
 const mapStateToProps = (state) => ({
   isAuthorized: state.ownUser.profile.user.isAuthorized,
-  userAuthToken: state.ownUser.profile.user.token
+  userAuthToken: state.ownUser.profile.user.token,
+  profile: state.ownUser.profile
 })
 
 const mapDispatchToProps = (dispatch) => ({

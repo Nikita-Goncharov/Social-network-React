@@ -1,27 +1,34 @@
 import styles from "./UserItem.module.css"
-import {NavLink} from "react-router-dom";
+import {NavLink} from "react-router-dom"
+import AnonUserImg from "../../AnonUserImg/AnonUserImg"
+
 function User(props) {
   return (
       <>
-        <NavLink to={"/profile/" + props.user.id}>
+        <NavLink to={"/profile/" + props.profile.id}>
             <div className={styles.user_img}>
-              <img src={props.user.img} width="300" alt=""/>
+              {
+                props.profile.img ?
+                  <img src={props.profile.img} width="300" alt=""/>
+                  :
+                  <AnonUserImg />
+              }
             </div>
 
-            <div className={styles.user_data}>
+          <div className={styles.user_data}>
               <div>
-                <h3>{props.user.username}</h3>
-                <p>{props.user.status}</p>
+                <h3>{props.profile.user.username}</h3>
+                <p>{props.profile.status}</p>
               </div>
               <div>
-                <h3>{props.user.country}</h3>
-                <h4>{props.user.city}</h4>
+                <h3>{props.profile.country}</h3>
+                <h4>{props.profile.city}</h4>
               </div>
             </div>
         </NavLink>
         <div>
-          <button onClick={() => props.followUser(props.user.id)}>
-            {props.user.followed ? "Unfollow" : "Follow"}
+          <button onClick={() => props.followUser(props.profile.id)}>
+            {props.profile.followed ? "Unfollow" : "Follow"}
           </button>
         </div>
       </>

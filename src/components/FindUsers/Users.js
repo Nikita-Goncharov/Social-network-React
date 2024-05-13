@@ -20,7 +20,7 @@ function Users(props) {
         <div className={styles.users_management}>
           <div className={styles.users}>
             <ul>
-              {props.users.map(user => <li key={user.id}><User user={user} followUser={props.followUser}/></li>)}
+              {props.profiles.map(profile => <li key={profile.id}><User profile={profile} followUser={props.followUser}/></li>)}
             </ul>
           </div>
         </div>

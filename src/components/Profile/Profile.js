@@ -1,11 +1,17 @@
 import styles from './Profile.module.css'
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import AnonUserImg from "../AnonUserImg/AnonUserImg";
 
 const ProfileInfo = (props) => {
   return (
       <div className={styles.profile_info}>
         <div className={styles.profile_img}>
-          <img src={props.profile_data.img} alt=""/>
+          {
+            props.profile_data.img ?
+              <img src={props.profile_data.img} width="300" alt="User img"/>
+              :
+              <AnonUserImg />
+          }
         </div>
         <div className={styles.profile_desc}>
           <h2>{props.profile_data.user.username}</h2>

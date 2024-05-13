@@ -2,7 +2,7 @@ const ADD_POST = "ADD-POST"
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 const UPDATE_NEW_POST_TITLE = "UPDATE-NEW-POST-TITLE"
 const UPDATE_PROFILE_DATA = "UPDATE-PROFILE-DATA"
-export const img_path = "https://aui.atlassian.com/aui/8.8/docs/images/avatar-person.svg"
+export const imgPath = "https://aui.atlassian.com/aui/8.8/docs/images/avatar-person.svg"
 
 
 const initialState = {
@@ -22,7 +22,7 @@ const initialState = {
         }
     },
     posts: [
-        {id: 1, img_path: img_path, title: "Greeting", text: "Hello, man"},
+        {id: 1, img_path: imgPath, title: "Greeting", text: "Hello, man"},
     ],
     newPostTitle: "Default title",
     newPostText: "Default post text"
@@ -34,7 +34,7 @@ const profileReducer = (state=initialState, action) => {
           let lastPostId = state.posts[state.posts.length-1].id
           return {
               ...state,
-              posts: [...state.posts, {id: lastPostId+1, img_path: img_path, title: state.newPostTitle, text: state.newPostText}],
+              posts: [...state.posts, {id: lastPostId+1, img_path: imgPath, title: state.newPostTitle, text: state.newPostText}],
               newPostTitle: "",
               newPostText: ""
           }

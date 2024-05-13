@@ -1,7 +1,7 @@
 import {useParams, useLocation, useNavigate} from "react-router-dom";
 
 
-export default (Component) => {
+const customWithParams = (Component) => {
     return (props) => {
         let location = useLocation()
         let history = useNavigate()
@@ -9,3 +9,5 @@ export default (Component) => {
         return <Component location={location} history={history} params={params} {...props}/>
     }
 }
+
+export default customWithParams
