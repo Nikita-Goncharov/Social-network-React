@@ -1,6 +1,6 @@
 import styles from './Profile.module.css'
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import AnonUserImg from "../AnonUserImg/AnonUserImg";
+import AnonProfileImg from "../common/AnonProfileImg/AnonProfileImg";
 
 const ProfileInfo = (props) => {
   return (
@@ -8,9 +8,9 @@ const ProfileInfo = (props) => {
         <div className={styles.profile_img}>
           {
             props.profile_data.img ?
-              <img src={props.profile_data.img} width="300" alt="User img"/>
+              <img src={props.profile_data.img} width="300" alt="ProfileItem img"/>
               :
-              <AnonUserImg />
+              <AnonProfileImg />
           }
         </div>
         <div className={styles.profile_desc}>

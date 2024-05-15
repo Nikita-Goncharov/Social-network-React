@@ -2,10 +2,10 @@ import App from "./App";
 import {useCookies} from "react-cookie";
 import {connect} from "react-redux";
 import {useEffect} from "react";
-import {loginUserAC} from "./redux/ownUserReducer";
+import {loginAC} from "./redux/ownProfileReducer";
+
+
 // App container for check if in cookies exists user token and if exists, then load his data
-
-
 function AppContainerLoginUser(props) {
   const [cookies, setCookie] = useCookies()
   useEffect(  () => {
@@ -45,7 +45,7 @@ function AppContainerLoginUser(props) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  loginUser: (user_data, profile_data) => dispatch(loginUserAC(user_data, profile_data))
+  loginUser: (user_data, profile_data) => dispatch(loginAC(user_data, profile_data))
 })
 
 export default connect(null, mapDispatchToProps)(AppContainerLoginUser)

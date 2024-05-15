@@ -1,0 +1,26 @@
+.profile_item {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px auto;
+    background-color: #bbc4c7;
+}
+
+.profile_item a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: black;
+    text-decoration: none;
+}
+
+.profile_img img {
+    width: 200px;
+}
+
+.profile_follow_button {
+    margin-right: 20px;
+    padding: 10px 20px;
+}

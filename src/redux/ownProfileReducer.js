@@ -1,5 +1,5 @@
-const LOGIN_USER = "LOGIN-USER"
-const LOGOUT_USER = "LOGOUT-USER"
+const LOGIN = "LOGIN"
+const LOGOUT = "LOGOUT"
 const UPDATE_INPUT_VALUES = "UPDATE-INPUT-VALUES"
 
 const initialState = {
@@ -20,15 +20,15 @@ const initialState = {
       isAuthorized: false
     }
   },
-  currentInputValues: {
+  currentInputValues: {  // TODO: login data do refactor
     email: "",
     password: ""
   }
 }
 
-const ownUserReducer = (state=initialState, action) => {
+const ownProfileReducer = (state=initialState, action) => {
   switch (action.type) {
-    case LOGIN_USER:
+    case LOGIN:
       return {
         ...state,
         profile: {
@@ -49,7 +49,7 @@ const ownUserReducer = (state=initialState, action) => {
           }
         }
       }
-    case LOGOUT_USER:
+    case LOGOUT:
       return {
         ...state,
         profile: {
@@ -83,9 +83,9 @@ const ownUserReducer = (state=initialState, action) => {
   }
 }
 
-export const loginUserAC = (user_data, profile_data) => {
+export const loginAC = (user_data, profile_data) => {
   return {
-    type: LOGIN_USER,
+    type: LOGIN,
     profile_id: profile_data.profile_id,
     img: profile_data.img,
     status: profile_data.status,
@@ -102,12 +102,12 @@ export const loginUserAC = (user_data, profile_data) => {
   }
 }
 
-export const logoutUserAC = () => ({
-  type: LOGOUT_USER
+export const logoutAC = () => ({
+  type: LOGOUT
 })
 
 export const setCurrentLoginInputValuesAC = (email, password) => ({
   type: UPDATE_INPUT_VALUES, email, password
 })
 
-export default ownUserReducer
+export default ownProfileReducer

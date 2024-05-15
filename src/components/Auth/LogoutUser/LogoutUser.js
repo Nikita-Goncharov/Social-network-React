@@ -1,11 +1,13 @@
 import {useCookies} from "react-cookie";
 import {connect} from "react-redux";
 import {useEffect} from "react";
-import {logoutUserAC} from "../../redux/ownUserReducer";
-import {Navigate} from "react-router-dom";
+import {logoutAC} from "../../../redux/ownProfileReducer";
+import {useNavigate} from "react-router-dom";
 
 function LogoutUserRedirect() {
-  return <Navigate to="/login" />
+  const nav = useNavigate()
+  nav("/login")
+  return <></>
 }
 
 function LogoutUserAPIContainer(props) {
@@ -20,7 +22,7 @@ function LogoutUserAPIContainer(props) {
         if (response.status === 200) {
           props.logoutUser()
         } else {
-          console.log("User was not logout in API")
+          console.log("ProfileItem was not logout in API")
         }
       }
       logoutUserAPI()
@@ -30,13 +32,13 @@ function LogoutUserAPIContainer(props) {
 }
 
 const mapStateToProps = (state) => ({
-  isAuthorized: state.ownUser.profile.user.isAuthorized,
-  userAuthToken: state.ownUser.profile.user.token,
-  profile: state.ownUser.profile
+  isAuthorized: state.ownProfile.profile.user.isAuthorized,
+  userAuthToken: state.ownProfile.profile.user.token,
+  profile: state.ownProfile.profile
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  logoutUser: () => dispatch(logoutUserAC())
+  logoutUser: () => dispatch(logoutAC())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogoutUserAPIContainer)

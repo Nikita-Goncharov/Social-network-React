@@ -1,10 +1,11 @@
 import LoginUser from "./LoginUser";
 import {connect} from "react-redux";
-import {setCurrentLoginInputValuesAC, loginUserAC} from "../../redux/ownUserReducer";
+import {setCurrentLoginInputValuesAC, loginAC} from "../../../redux/ownProfileReducer";
 import {useCookies} from "react-cookie";
-
+import {useNavigate} from "react-router-dom";
 
 function LoginUserContainer(props) {
+  const nav = useNavigate()
   const [cookies, setCookie] = useCookies()
   const loginUserAPICall = async () => {
     let responseLogin = await fetch(
@@ -38,6 +39,7 @@ function LoginUserContainer(props) {
           birth_date: responseWhoAmIBody.profile.birth_date
         }
         props.loginUser(user_data, profile_data)
+        nav("/profile")
       } else {
         // TODO: show error
       }
@@ -52,14 +54,14 @@ function LoginUserContainer(props) {
 
 
 const mapStateToProps = (state) => ({
-  email: state.ownUser.currentInputValues.email,
-  password: state.ownUser.currentInputValues.password,
+  email: state.ownProfile.currentInputValues.email,
+  password: state.ownProfile.currentInputValues.password,
 
 })
 
 const mapDispatchToProps = (dispatch) => ({
   updateInputValues: (email, password) => dispatch(setCurrentLoginInputValuesAC(email, password)),
-  loginUser: (user_data, profile_data) => dispatch(loginUserAC(user_data, profile_data))
+  loginUser: (user_data, profile_data) => dispatch(loginAC(user_data, profile_data))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginUserContainer)

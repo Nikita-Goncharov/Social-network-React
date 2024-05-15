@@ -1,51 +1,51 @@
-const FOLLOW_USER = "FOLLOW-USER"
-const SET_USERS = "SET-USERS"
-const TOTAL_USERS = "TOTAL-USERS"
+const FOLLOW = "FOLLOW"
+const SET_PROFILES = "SET-PROFILES"
+const TOTAL_PROFILES = "TOTAL-PROFILES"
 const PAGES_COUNT = "PAGES-COUNT"
 const CURRENT_PAGE = "CURRENT-PAGE"
 const FETCHING = "FETCHING"
 
 
 const initialState = {
-  users: [],
+  profiles: [],
   pagesCount: 0,
   currentPage: 1,
-  countUsersOnPage: 10,
-  totalUsers: 0,
+  countProfilesOnPage: 10,
+  totalProfiles: 0,
   isFetching: false
 }
 
-const findUsersReducer = (state = initialState, action) => {
+const findProfilesReducer = (state = initialState, action) => {
   switch(action.type) {
-    case FOLLOW_USER:
-      let usersCopy = [...state.users]
+    case FOLLOW:
+      let profilesCopy = [...state.profiles]
 
-      usersCopy = usersCopy.map(user => {
-        if (user.id === action.user_id) {
-          user.followed = !user.followed
-          return {...user}
+      profilesCopy = profilesCopy.map(profile => {
+        if (profile.id === action.profile_id) {
+          profile.followed = !profile.followed
+          return {...profile}
         }
-        return user
+        return profile
       })
 
       return {
         ...state,
-        users: usersCopy
+        profiles: profilesCopy
       }
-    case SET_USERS:  // Add users to state from API
+    case SET_PROFILES:
       return {
         ...state,
-        users: action.users
+        profiles: action.profiles
       }
     case PAGES_COUNT:
       return {
         ...state,
         pagesCount: action.pagesCount
       }
-    case TOTAL_USERS:
+    case TOTAL_PROFILES:
       return {
         ...state,
-        totalUsers: action.count
+        totalProfiles: action.count
       }
     case CURRENT_PAGE:
       return {
@@ -62,17 +62,17 @@ const findUsersReducer = (state = initialState, action) => {
   }
 }
 
-export const followUserActionCreator = (user_id) => {
-  return {type: FOLLOW_USER, user_id: user_id}
+export const followProfileAC = (profile_id) => {
+  return {type: FOLLOW, profile_id}
 }
 
-// Users from API when component loaded
-export const setUsersAC = (users) => {
-  return {type: SET_USERS, users: users}
+// Profiles from API when component loaded
+export const setProfilesAC = (profiles) => {
+  return {type: SET_PROFILES, profiles}
 }
 
-export const totalUsersAC = (count) => {
-  return {type: TOTAL_USERS, count}
+export const totalProfilesAC = (count) => {
+  return {type: TOTAL_PROFILES, count}
 }
 
 export const pagesCountAC = (pagesCount) => {
@@ -88,4 +88,4 @@ export const fetchingAC = (isFetching) => {
 }
 
 
-export default findUsersReducer
+export default findProfilesReducer

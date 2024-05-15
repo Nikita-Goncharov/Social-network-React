@@ -6,12 +6,16 @@ import customWithParams from "../common/customWithParams/customWithParams"
 
 class ProfileAPIContainer extends React.Component {
     componentDidMount() {
-        let userId = this.props.params.userId
-        if (!userId) {
-            userId = 30  // TODO: get profile by auth token
+        let profileId = this.props.params.profileId
+        if (!profileId) {
+            if (this.props.ownProfile.user.isAuthorized) {
+                profileId = this.props.ownProfile.id
+            } else {
+                profileId = null  // TODO: error
+            }
         }
         (async () => {
-            let response  = await fetch(`http://localhost:8080/api/v0.2/profile?profile_id=${userId}`)
+            let response  = await fetch(`http://localhost:8080/api/v0.2/profile?profile_id=${profileId}`)
             if (response.status === 200) {
                 let responseJSON = await response.json()
                 const user_data = {
@@ -41,7 +45,10 @@ class ProfileAPIContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => (
-    {profile: state.profilePage.profile}
+    {
+        profile: state.profilePage.profile,
+        ownProfile: state.ownProfile.profile
+    }
 )
 
 const mapDispatchToProps = (dispatch) => (

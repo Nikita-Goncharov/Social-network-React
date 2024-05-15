@@ -4,25 +4,26 @@ import Home from "../Home/Home"
 import Settings from "../Settings/Settings"
 import Page404 from "../ErrorPages/Page404"
 import MessagesContainer from "../Messages/MessagesContainer";
-import FindUsersContainer from "../FindUsers/FindUsersContainer"
+import FindProfilesContainer from "../FindProfiles/FindProfilesContainer"
 import ProfileContainer from "../Profile/ProfileContainer";
-import LoginUserContainer from "../LoginUser/LoginUserContainer";
-import LogoutUserContainer from "../LogoutUser/LogoutUser"
-import RegisterUserContainer from "../RegisterUser/RegisterUserContainer";
+import LoginUserContainer from "../Auth/LoginUser/LoginUserContainer";
+import LogoutUserContainer from "../Auth/LogoutUser/LogoutUser"
+import RegisterUserContainer from "../Auth/RegisterUser/RegisterUserContainer";
+import {connect} from "react-redux";
 
 
-const MainContent = () => {
+const MainContent = (props) => {
   return (
       <div className={styles.main_content}>
         <Routes>
           {/* Way of adding routes is not matter */}
           <Route element={<Home />} path=""/>
           <Route element={<Home />} path="/home"/>
-          <Route element={<ProfileContainer />} path="/profile"/>
-          <Route element={<ProfileContainer />} path="/profile/:userId"/>
+          {props.ownProfile.user.isAuthorized ? <Route element={<ProfileContainer />} path="/profile"/> : <></>}
+          <Route element={<ProfileContainer />} path="/profile/:profileId"/>
           <Route element={<Settings />} path="/settings"/>
           <Route element={<MessagesContainer />} path="/messages"/>
-          <Route element={<FindUsersContainer />} path="/find_users"/>
+          <Route element={<FindProfilesContainer />} path="/find-profiles"/>
 
           <Route element={<RegisterUserContainer />} path="/register"/>
           <Route element={<LoginUserContainer />} path="/login"/>
@@ -33,4 +34,9 @@ const MainContent = () => {
   )
 }
 
-export default MainContent
+const mapStateToProps = (state) => ({
+  ownProfile: state.ownProfile.profile
+})
+
+const MainContentContainer = connect(mapStateToProps, {})(MainContent)
+export default MainContentContainer
