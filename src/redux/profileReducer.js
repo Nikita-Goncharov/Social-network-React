@@ -74,17 +74,17 @@ const profileReducer = (state=initialState, action) => {
   }
 }
 
-export const addPostActionCreator = () => ({type: ADD_POST})
+export const addPostAC = () => ({type: ADD_POST})
 
-export const updateNewPostTextActionCreator = text => (
+export const updateNewPostTextAC = text => (
     {type: UPDATE_NEW_POST_TEXT, newText: text}
 )
 
-export const updateNewPostTitleActionCreator = (title) => (
+export const updateNewPostTitleAC = (title) => (
     {type: UPDATE_NEW_POST_TITLE, newTitle: title}
 )
 
-export const updateProfileDataActionCreator = (user_data, profile_data) => (
+export const updateProfileDataAC = (user_data, profile_data) => (  // TODO: change name from update to set
     {
         type: UPDATE_PROFILE_DATA,
         profile_id: profile_data.profile_id,

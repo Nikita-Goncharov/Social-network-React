@@ -1,5 +1,5 @@
 import styles from './Profile.module.css'
-import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import PostsContainer from "./Posts/PostsContainer";
 import AnonProfileImg from "../common/AnonProfileImg/AnonProfileImg";
 
 const ProfileInfo = (props) => {
@@ -26,14 +26,14 @@ const ProfileInfo = (props) => {
   )
 }
 
-const Profile = (props) => {
+const Profile = ({profile_data, profileIsOwn}) => {
   return (
       <div className={styles.profile}>
         <div className={styles.poster}>
           <img src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg" alt=""/>
         </div>
-        <ProfileInfo profile_data={props.profile_data}/>
-        <MyPostsContainer className={styles.posts} />
+        <ProfileInfo profile_data={profile_data}/>
+        <PostsContainer className={styles.posts} profileIsOwn={profileIsOwn} />
       </div>
   )
 }

@@ -1,16 +1,16 @@
-import styles from './MainContent.module.css'
+import {connect} from "react-redux";
 import {Route, Routes} from 'react-router-dom'
+
 import Home from "../Home/Home"
 import Settings from "../Settings/Settings"
 import Page404 from "../ErrorPages/Page404"
-import MessagesContainer from "../Messages/MessagesContainer";
-import FindProfilesContainer from "../FindProfiles/FindProfilesContainer"
+import styles from './MainContent.module.css'
 import ProfileContainer from "../Profile/ProfileContainer";
-import LoginUserContainer from "../Auth/LoginUser/LoginUserContainer";
+import MessagesContainer from "../Messages/MessagesContainer";
 import LogoutUserContainer from "../Auth/LogoutUser/LogoutUser"
+import LoginUserContainer from "../Auth/LoginUser/LoginUserContainer";
+import FindProfilesContainer from "../FindProfiles/FindProfilesContainer"
 import RegisterUserContainer from "../Auth/RegisterUser/RegisterUserContainer";
-import {connect} from "react-redux";
-
 
 const MainContent = (props) => {
   return (
@@ -19,7 +19,7 @@ const MainContent = (props) => {
           {/* Way of adding routes is not matter */}
           <Route element={<Home />} path=""/>
           <Route element={<Home />} path="/home"/>
-          {props.ownProfile.user.isAuthorized ? <Route element={<ProfileContainer />} path="/profile"/> : <></>}
+          {props.ownProfile.user.isAuthorized && <Route element={<ProfileContainer />} path="/profile"/>}
           <Route element={<ProfileContainer />} path="/profile/:profileId"/>
           <Route element={<Settings />} path="/settings"/>
           <Route element={<MessagesContainer />} path="/messages"/>

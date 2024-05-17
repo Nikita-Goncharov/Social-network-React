@@ -1,6 +1,6 @@
 import React from "react";
 import Profile from "./Profile";
-import {updateProfileDataActionCreator} from "../../redux/profileReducer";
+import {updateProfileDataAC} from "../../redux/profileReducer";
 import {connect} from "react-redux";
 import customWithParams from "../common/customWithParams/customWithParams"
 
@@ -39,8 +39,15 @@ class ProfileAPIContainer extends React.Component {
         })()
     }
 
+
     render() {
-        return <Profile profile_data={this.props.profile}/>
+        let profileIsOwn
+        if (this.props.params.profileId) {
+            profileIsOwn = Number(this.props.ownProfile.id) === Number(this.props.params.profileId)
+        } else {
+            profileIsOwn = true
+        }
+        return <Profile profile_data={this.props.profile} profileIsOwn={profileIsOwn}/>
     }
 }
 
@@ -52,7 +59,7 @@ const mapStateToProps = (state) => (
 )
 
 const mapDispatchToProps = (dispatch) => (
-    {updateProfile: (user_data, profile_data) => dispatch(updateProfileDataActionCreator(user_data, profile_data))}
+    {updateProfile: (user_data, profile_data) => dispatch(updateProfileDataAC(user_data, profile_data))}
 )
 
 const ProfileContainerWithParams = customWithParams(ProfileAPIContainer)

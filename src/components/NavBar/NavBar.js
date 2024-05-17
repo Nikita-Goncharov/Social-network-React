@@ -1,16 +1,16 @@
-import styles from './NavBar.module.css'
-import {NavLink} from 'react-router-dom'
 import {connect} from "react-redux";
+import {NavLink} from 'react-router-dom'
+import styles from './NavBar.module.css'
+
 const NavBar = (props) => {
   return (
       <nav className={styles.navbar}>
         <ul>
           <li><NavLink to="/home" className={({isActive}) => isActive ? styles.active : ''}>Home</NavLink></li>
           {
-            props.ownProfile.user.isAuthorized ?
-              <li><NavLink to="/profile" className={({isActive}) => isActive ? styles.active : ''}>Profile</NavLink></li>
-              :
-              <></>
+            props.ownProfile.user.isAuthorized
+            &&
+            <li><NavLink to="/profile" className={({isActive}) => isActive ? styles.active : ''}>Profile</NavLink></li>
           }
           <li><NavLink to="/messages" className={({isActive}) => isActive ? styles.active : ''}>Messages</NavLink></li>
           <li><NavLink to="/find-profiles" className={({isActive}) => isActive ? styles.active : ''}>Find users</NavLink></li>
