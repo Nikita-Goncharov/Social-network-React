@@ -2,6 +2,9 @@ const ADD_POST = "ADD-POST"
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 const UPDATE_NEW_POST_TITLE = "UPDATE-NEW-POST-TITLE"
 const UPDATE_PROFILE_DATA = "UPDATE-PROFILE-DATA"
+const LOAD_POST = "LOAD-POST"
+const CLEAR_POSTS = "CLEAR-POSTS"
+
 export const imgPath = "https://aui.atlassian.com/aui/8.8/docs/images/avatar-person.svg"
 
 
@@ -22,21 +25,36 @@ const initialState = {
         }
     },
     posts: [
-        {id: 1, img_path: imgPath, title: "Greeting", text: "Hello, man"},
+        // {id: 1, img_path: imgPath, title: "Greeting", text: "Hello, man"},
     ],
-    newPostTitle: "Default title",
-    newPostText: "Default post text"
+    newPostTitle: "",
+    newPostText: ""
 }
 
 const profileReducer = (state=initialState, action) => {
   switch(action.type) {
-      case ADD_POST:
-          let lastPostId = state.posts[state.posts.length-1].id
+      // TODO: load posts and add posts refactor to one case
+      case LOAD_POST:
           return {
               ...state,
-              posts: [...state.posts, {id: lastPostId+1, img_path: imgPath, title: state.newPostTitle, text: state.newPostText}],
-              newPostTitle: "",
-              newPostText: ""
+              posts: [...state.posts, {id: action.id, img_path: imgPath, title: action.title, text: action.text}],
+          }
+      case CLEAR_POSTS:
+          return {
+              ...state,
+              posts: []
+          }
+      case ADD_POST:
+          const lastPostId = state.posts[state.posts.length-1].id
+          if (state.newPostTitle && state.newPostText) {
+              return {
+                  ...state,
+                  posts: [...state.posts, {id: lastPostId+1, img_path: imgPath, title: state.newPostTitle, text: state.newPostText}],
+                  newPostTitle: "",
+                  newPostText: ""
+              }
+          } else {
+              return state
           }
       case UPDATE_NEW_POST_TEXT:
           return {
@@ -73,6 +91,14 @@ const profileReducer = (state=initialState, action) => {
           return state
   }
 }
+
+export const clearPreviousPostsAC = () => ({
+    type: CLEAR_POSTS
+})
+
+export const loadPostAC = (id, title, text) => ({
+    type: LOAD_POST, id, title, text
+})
 
 export const addPostAC = () => ({type: ADD_POST})
 

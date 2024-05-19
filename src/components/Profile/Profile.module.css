@@ -1,24 +1,9 @@
-.profile {
-    display: grid;
-    grid-template-areas:
-    "poster"
-    "p_info"
-    "posts";
-    grid-template-rows: 2fr 1fr 1fr;
-    grid-template-columns: 1fr;
-}
-
-.profile .poster {
-    grid-area: poster;
-}
-
 .profile .poster img {
     width: 100%;
 
 }
 
 .profile .profile_info {
-    grid-area: p_info;
     display: grid;
     grid-template-areas:
     "p_img p_desc";
@@ -36,9 +21,4 @@
 
 .profile .profile_img img {
     width: 100%;
-}
-
-
-.profile .posts {
-    grid-area: posts;
 }

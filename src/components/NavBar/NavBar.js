@@ -13,7 +13,7 @@ const NavBar = (props) => {
             <li><NavLink to="/profile" className={({isActive}) => isActive ? styles.active : ''}>Profile</NavLink></li>
           }
           <li><NavLink to="/messages" className={({isActive}) => isActive ? styles.active : ''}>Messages</NavLink></li>
-          <li><NavLink to="/find-profiles" className={({isActive}) => isActive ? styles.active : ''}>Find users</NavLink></li>
+          <li><NavLink to="/find-profiles" className={({isActive}) => isActive ? styles.active : ''}>Find profiles</NavLink></li>
           <li><NavLink to="/settings" className={({isActive}) => isActive ? styles.active : ''}>Settings</NavLink></li>
         </ul>
       </nav>

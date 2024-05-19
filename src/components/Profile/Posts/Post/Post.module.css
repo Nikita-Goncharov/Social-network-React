@@ -1,5 +1,7 @@
 .post {
+    padding: 7px 15px;
     margin: 10px 5px;
+    background-color: #BBC4C7;
 }
 
 .post img {
