@@ -1,4 +1,3 @@
-const ADD_POST = "ADD-POST"
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 const UPDATE_NEW_POST_TITLE = "UPDATE-NEW-POST-TITLE"
 const UPDATE_PROFILE_DATA = "UPDATE-PROFILE-DATA"
@@ -24,9 +23,7 @@ const initialState = {
             email: ""
         }
     },
-    posts: [
-        // {id: 1, img_path: imgPath, title: "Greeting", text: "Hello, man"},
-    ],
+    posts: [],
     newPostTitle: "",
     newPostText: ""
 }
@@ -35,27 +32,20 @@ const profileReducer = (state=initialState, action) => {
   switch(action.type) {
       // TODO: load posts and add posts refactor to one case
       case LOAD_POST:
-          return {
-              ...state,
-              posts: [...state.posts, {id: action.id, img_path: imgPath, title: action.title, text: action.text}],
-          }
-      case CLEAR_POSTS:
-          return {
-              ...state,
-              posts: []
-          }
-      case ADD_POST:
-          const lastPost = state.posts[state.posts.length-1]
-          const lastPostId = lastPost ? state.posts[state.posts.length-1].id : 0
-          if (state.newPostTitle && state.newPostText) {
+          if (action.title && action.text) {
               return {
                   ...state,
-                  posts: [...state.posts, {id: lastPostId+1, img_path: imgPath, title: state.newPostTitle, text: state.newPostText}],
+                  posts: [...state.posts, {id: action.id, img_path: imgPath, title: action.title, text: action.text}],
                   newPostTitle: "",
                   newPostText: ""
               }
           } else {
               return state
+          }
+      case CLEAR_POSTS:
+          return {
+              ...state,
+              posts: []
           }
       case UPDATE_NEW_POST_TEXT:
           return {
@@ -101,8 +91,6 @@ export const loadPostAC = (id, title, text) => ({
     type: LOAD_POST, id, title, text
 })
 
-export const addPostAC = () => ({type: ADD_POST})
-
 export const updateNewPostTextAC = text => (
     {type: UPDATE_NEW_POST_TEXT, newText: text}
 )
@@ -111,7 +99,7 @@ export const updateNewPostTitleAC = (title) => (
     {type: UPDATE_NEW_POST_TITLE, newTitle: title}
 )
 
-export const updateProfileDataAC = (user_data, profile_data) => (  // TODO: change name from update to set
+export const setProfileDataAC = (user_data, profile_data) => (
     {
         type: UPDATE_PROFILE_DATA,
         profile_id: profile_data.profile_id,

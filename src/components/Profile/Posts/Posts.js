@@ -2,10 +2,7 @@ import React from "react";
 import Post from "./Post/Post"
 import styles from "./Posts.module.css"
 
-const Posts = ({error, newPostTitle, newPostText, posts, addPost, changeNewPostText, changeNewPostTitle, profileIsOwn}) => {
-  let addPostCallback = () => {
-    addPost()
-  }
+const Posts = ({error, newPostTitle, newPostText, posts, addPostCallback, changeNewPostText, changeNewPostTitle, profileIsOwn}) => {
 
   let changeNewPostTextCallback = (e) => {
     changeNewPostText(e.target.value)
@@ -24,7 +21,7 @@ const Posts = ({error, newPostTitle, newPostText, posts, addPost, changeNewPostT
           <h2>New post</h2>
           <input placeholder="Post title" onChange={changeNewPostTitleCallback} value={newPostTitle} type="text"/><br/>
           <textarea placeholder="Post description" onChange={changeNewPostTextCallback} value={newPostText}/><br/>
-          <button onClick={addPostCallback}>Add post</button>
+          <button onClick={() => addPostCallback(newPostTitle, newPostText)}>Add post</button>
         </div>
       }
       <div className={styles.posts}>
