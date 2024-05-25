@@ -45,7 +45,8 @@ const profileReducer = (state=initialState, action) => {
               posts: []
           }
       case ADD_POST:
-          const lastPostId = state.posts[state.posts.length-1].id
+          const lastPost = state.posts[state.posts.length-1]
+          const lastPostId = lastPost ? state.posts[state.posts.length-1].id : 0
           if (state.newPostTitle && state.newPostText) {
               return {
                   ...state,

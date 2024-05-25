@@ -3,10 +3,12 @@ import {connect} from "react-redux";
 import {setCurrentLoginInputValuesAC, loginAC} from "../../../redux/ownProfileReducer";
 import {useCookies} from "react-cookie";
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 
 function LoginUserContainer(props) {
   const nav = useNavigate()
   const [cookies, setCookie] = useCookies()
+  const [error, setError] = useState({isRaised: false, message: ""})
   const loginUserAPICall = async () => {
     let responseLogin = await fetch(
       "http://localhost:8080/api/v0.2/login",
@@ -21,7 +23,7 @@ function LoginUserContainer(props) {
         {headers: {"Authorization": responseLoginBody.token}}
       )
       if (responseWhoAmI.status === 200) {
-        let responseWhoAmIBody = await responseWhoAmI.json()
+        const responseWhoAmIBody = await responseWhoAmI.json()
         const user_data = {
           user_id: responseWhoAmIBody.profile.user.id,
           username: responseWhoAmIBody.profile.user.username,
@@ -41,15 +43,15 @@ function LoginUserContainer(props) {
         props.loginUser(user_data, profile_data)
         nav("/profile")
       } else {
-        // TODO: show error
+        setError({isRaised: true, message: "Error. Can`t login user, credentials is not valid."})
       }
     } else {
-      // TODO: show error
+      setError({isRaised: true, message: "Error. Can`t login user, credentials is not valid."})
     }
     props.updateInputValues("", "")
   }
 
-  return <LoginUser email={props.email} password={props.password} updateInputValues={props.updateInputValues} loginUserAPICall={loginUserAPICall}/>
+  return <LoginUser error={error} email={props.email} password={props.password} updateInputValues={props.updateInputValues} loginUserAPICall={loginUserAPICall}/>
 }
 
 

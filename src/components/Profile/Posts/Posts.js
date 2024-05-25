@@ -1,7 +1,8 @@
 import React from "react";
 import Post from "./Post/Post"
+import styles from "./Posts.module.css"
 
-const Posts = ({newPostTitle, newPostText, posts, addPost, changeNewPostText, changeNewPostTitle, profileIsOwn}) => {
+const Posts = ({error, newPostTitle, newPostText, posts, addPost, changeNewPostText, changeNewPostTitle, profileIsOwn}) => {
   let addPostCallback = () => {
     addPost()
   }
@@ -15,23 +16,27 @@ const Posts = ({newPostTitle, newPostText, posts, addPost, changeNewPostText, ch
     }
     
   return (
-      <div>
+    <>
+      {
+        profileIsOwn
+        &&
+        <div className={styles.posts_form}>
+          <h2>New post</h2>
+          <input placeholder="Post title" onChange={changeNewPostTitleCallback} value={newPostTitle} type="text"/><br/>
+          <textarea placeholder="Post description" onChange={changeNewPostTextCallback} value={newPostText}/><br/>
+          <button onClick={addPostCallback}>Add post</button>
+        </div>
+      }
+      <div className={styles.posts}>
         <h3>Posts</h3>
         {
-          profileIsOwn
-          &&
-          <div>
-            <h2>New post</h2>
-            <input onChange={changeNewPostTitleCallback} value={newPostTitle} type="text"/><br/>
-            <textarea onChange={changeNewPostTextCallback} value={newPostText}/><br/>
-            <button onClick={addPostCallback}>Add post</button>
-          </div>
+          error.isRaised ?
+            <p style={{backgroundColor: "red", color: "#fff"}}>{error.message}</p>
+            :
+            posts.map(({id, img_path, title, text}) => <Post id={id} key={id} img_path={img_path} title={title} message={text}/>)
         }
-        <div className="posts">
-          {posts.map(({id, img_path, title, text}) => <Post id={id} key={id} img_path={img_path} title={title}
-                                                            message={text}/>)}
-        </div>
       </div>
+    </>
   )
 }
 

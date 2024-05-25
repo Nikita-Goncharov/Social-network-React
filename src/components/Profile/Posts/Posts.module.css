@@ -1,0 +1,19 @@
+.posts_form {
+    width: 40%;
+    margin: 0 auto;
+}
+
+.posts_form h2 {
+    text-align: center;
+}
+
+.posts_form > * {
+    padding: 5px 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.posts h3 {
+    padding: 5px;
+}

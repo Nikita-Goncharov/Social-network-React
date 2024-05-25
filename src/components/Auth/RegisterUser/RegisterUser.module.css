@@ -3,6 +3,12 @@
     margin: 30px auto;
 }
 
+.register_form h1 {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
 .register_form > * {
     display: block;
     margin: 10px 5px;

@@ -1,11 +1,11 @@
 import {clearPreviousPostsAC, loadPostAC, addPostAC, updateNewPostTextAC, updateNewPostTitleAC} from "../../../redux/profileReducer";
 import Posts from "./Posts";
 import {connect} from "react-redux";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 
 function PostsContainerAPI(props) {
-  console.log(props.profileId)
+  const [error, setError] = useState({isRaised: false, message: ""})
   const loadPosts = async (profileId) => {
     // TODO: pagination
     const count = 10
@@ -20,13 +20,13 @@ function PostsContainerAPI(props) {
         props.loadPost(id, title, description)
       }
     } else {
-      // TODO: show error
+      setError({isRaised: true, message: "Error. Can`t fetch profile posts."})
     }
   }
   useEffect(() => {
     loadPosts(props.profileId)
   }, [props.profileId])  // TODO: good or not ???
-  return <Posts {...props} />
+  return <Posts error={error} {...props} />
 }
 
 const mapStateToProps = (state, ownProps) => {

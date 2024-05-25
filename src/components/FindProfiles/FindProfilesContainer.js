@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import {connect} from "react-redux";
 
 import Profiles from "./Profiles";
@@ -12,54 +12,48 @@ import {
 } from "../../redux/findProfilesReducer";
 
 
-class FindProfilesAPIContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.props = props
-    this.changeCurrentPage = this.changeCurrentPage.bind(this)
-  }
+function FindProfilesAPIContainer(props) {
+  const [error, setError] = useState({isRaised: false, message: ""})
 
-  componentDidMount() {
-    if (this.props.profiles.length === 0) {
-      this.props.fetching(true)
+  useEffect(() => {
+    if (props.profiles.length === 0) {
+      props.fetching(true)
       fetch(
-        `http://localhost:8080/api/v0.2/profiles?page=${this.props.currentPage}&count=${this.props.countProfilesOnPage}`
+        `http://localhost:8080/api/v0.2/profiles?page=${props.currentPage}&count=${props.countProfilesOnPage}`
       ).then(
         response => response.json()
       ).then(responseJSON => {
-        this.props.setProfiles(responseJSON.profiles)
-        this.props.setTotalProfilesCount(responseJSON.total_count)
-        this.props.setPagesCount(Math.ceil(responseJSON.total_count / this.props.countProfilesOnPage))
-        this.props.fetching(false)
-      }).catch(err => console.log("Error occurred!"))
+        props.setProfiles(responseJSON.profiles)
+        props.setTotalProfilesCount(responseJSON.total_count)
+        props.setPagesCount(Math.ceil(responseJSON.total_count / props.countProfilesOnPage))
+        props.fetching(false)
+      }).catch(err => setError({isRaised: true, message: "Error. Can`t fetch profiles."}))
     }
-  }
+  }, []);
 
-  changeCurrentPage(currentPage) {
-    this.props.setCurrentPage(currentPage)
-    this.props.fetching(true)
+  function changeCurrentPage(currentPage) {
+    props.setCurrentPage(currentPage)
+    props.fetching(true)
     fetch(
-      `http://localhost:8080/api/v0.2/profiles?page=${currentPage}&count=${this.props.countProfilesOnPage}`
+      `http://localhost:8080/api/v0.2/profiles?page=${currentPage}&count=${props.countProfilesOnPage}`
     ).then(
       response => response.json()
     ).then(responseJSON => {
-      this.props.setProfiles(responseJSON.profiles)
-      this.props.fetching(false)
-    }).catch(err => console.log("Error occurred!"))  // TODO: show error
+      props.setProfiles(responseJSON.profiles)
+      props.fetching(false)
+    }).catch(err => setError({isRaised: true, message: "Error. Can`t fetch profiles."}))
   }
 
-  render() {
-    return (
-        <Profiles
-            changeCurrentPage={this.changeCurrentPage}
-            currentPage={this.props.currentPage}
-            pagesCount={this.props.pagesCount}
-            profiles={this.props.profiles}
-            follow={this.props.follow}
-            isFetching={this.props.isFetching}
-        />
-    )
-  }
+
+  return <Profiles
+          error={error}
+          changeCurrentPage={changeCurrentPage}
+          currentPage={props.currentPage}
+          pagesCount={props.pagesCount}
+          profiles={props.profiles}
+          follow={props.follow}
+          isFetching={props.isFetching}
+      />
 }
 
 

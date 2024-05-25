@@ -16,14 +16,21 @@ function Profiles(props) {
             return <span key={page} className={props.currentPage === page ? styles.activePage : styles.ordinaryPage} onClick={() => props.changeCurrentPage(page)}>{page}</span>
           })}
         </div>
-        {props.isFetching && <Loader />}
-        <div className={styles.users_management}>
-          <div className={styles.users}>
-            <ul>
-              {props.profiles.map(profile => <li key={profile.id}><ProfileItem profile={profile} follow={props.follow}/></li>)}
-            </ul>
-          </div>
-        </div>
+        {
+          props.error.isRaised ?
+            <p style={{backgroundColor: "red", color: "#fff"}}>{props.error.message}</p>
+            :
+          <>
+            {props.isFetching && <Loader />}
+            <div className={styles.users_management}>
+              <div className={styles.users}>
+                <ul>
+                  {props.profiles.map(profile => <li key={profile.id}><ProfileItem profile={profile} follow={props.follow}/></li>)}
+                </ul>
+              </div>
+            </div>
+          </>
+        }
       </>
   )
 }

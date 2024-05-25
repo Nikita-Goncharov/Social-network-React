@@ -3,6 +3,12 @@
     margin: 30px auto;
 }
 
+.login_form h1 {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
 .login_form > * {
     display: block;
     margin: 10px 5px;

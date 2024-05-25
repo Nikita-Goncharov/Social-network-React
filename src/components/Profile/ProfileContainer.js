@@ -1,20 +1,22 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Profile from "./Profile";
 import {updateProfileDataAC} from "../../redux/profileReducer";
 import {connect} from "react-redux";
 import customWithParams from "../common/customWithParams/customWithParams"
 
-class ProfileAPIContainer extends React.Component {
-    componentDidMount() {
-        let profileId = this.props.params.profileId
+function ProfileAPIContainer(props) {
+    const [error, setError] = useState({isRaised: false, message: ""})
+
+    useEffect(() => {
+        let profileId = props.params.profileId
         if (!profileId) {
-            if (this.props.ownProfile.user.isAuthorized) {
-                profileId = this.props.ownProfile.id
+            if (props.ownProfile.user.isAuthorized) {
+                profileId = props.ownProfile.id
             } else {
-                profileId = null  // TODO: error
+                setError({isRaised: true, message: "Error. There is no profile with that id."})
             }
         }
-        (async () => {
+        const loadProfile = async () => {
             let response  = await fetch(`http://localhost:8080/api/v0.2/profile?profile_id=${profileId}`)
             if (response.status === 200) {
                 let responseJSON = await response.json()
@@ -34,21 +36,24 @@ class ProfileAPIContainer extends React.Component {
                     birth_date: responseJSON.profile.birth_date
                 }
 
-                this.props.updateProfile(user_data, profile_data)
+                props.updateProfile(user_data, profile_data)
+            } else {
+                setError({isRaised: true, message: "Error. Can`t fetch profile."})
             }
-        })()
-    }
-
-
-    render() {
-        let profileIsOwn
-        if (this.props.params.profileId) {
-            profileIsOwn = Number(this.props.ownProfile.id) === Number(this.props.params.profileId)
-        } else {
-            profileIsOwn = true
         }
-        return <Profile profile_data={this.props.profile} profileIsOwn={profileIsOwn}/>
+        if (!error.isRaised) {
+            loadProfile()
+        }
+    }, [])
+
+
+    let profileIsOwn
+    if (props.params.profileId) {
+        profileIsOwn = Number(props.ownProfile.id) === Number(props.params.profileId)
+    } else {
+        profileIsOwn = true
     }
+    return <Profile error={error} profile_data={props.profile} profileIsOwn={profileIsOwn}/>
 }
 
 const mapStateToProps = (state) => (

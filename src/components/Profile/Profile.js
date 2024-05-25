@@ -27,11 +27,18 @@ const ProfileInfo = (props) => {
   )
 }
 
-const Profile = ({profile_data, profileIsOwn}) => {
-  return (
+const Profile = ({error, profile_data, profileIsOwn}) => {
+  return (  // TODO: more info with exception
       <div className={styles.profile}>
-        <ProfileInfo profile_data={profile_data}/>
-        <PostsContainer className={styles.posts} profileIsOwn={profileIsOwn} />
+        {
+          error.isRaised ?
+          <p style={{backgroundColor: "red", color: "#fff"}}>{error.message}</p>
+            :
+          <>
+            <ProfileInfo profile_data={profile_data}/>
+            <PostsContainer className={styles.posts} profileIsOwn={profileIsOwn} />
+          </>
+        }
       </div>
   )
 }

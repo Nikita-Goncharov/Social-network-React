@@ -2,11 +2,13 @@ import RegisterUser from "./RegisterUser";
 import {connect} from "react-redux";
 import {setNewUserDataAC} from "../../../redux/createNewUserReducer";
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 
 function RegisterUserContainerAPI(props) {
   const nav = useNavigate()
+  const [error, setError] = useState({isRaised: false, message: ""})
   const registerUserCallback = async () => {
-    const {username, email, password1, password2} = props;
+    const {username, email, password1, password2} = props;  // TODO: validate data
     if (password1 === password2) {
       let responseRegister = await fetch(
         "http://localhost:8080/api/v0.2/register",
@@ -16,12 +18,13 @@ function RegisterUserContainerAPI(props) {
       if (responseRegister.status === 200) {
         nav("/login")
       } else {
-        console.log("RegisterUser user error")  // TODO: show form error
+        setError({isRaised: true, message: "Error. Can`t register user."})
       }
     }
   }
 
   return <RegisterUser
+    error={error}
     username={props.username}
     email={props.email}
     password1={props.password1}

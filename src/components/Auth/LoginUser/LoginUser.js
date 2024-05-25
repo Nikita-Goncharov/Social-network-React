@@ -11,10 +11,12 @@ function LoginUser(props) {
 
   return <>
     <div className={styles.login_form}>
+      <h1>Login</h1>
       <input onChange={updateInputValuesCallback} type="text" name="email" placeholder="Email" value={props.email}/>
       <input onChange={updateInputValuesCallback} type="password" name="password" placeholder="Password"
              value={props.password}/>
       <button onClick={props.loginUserAPICall}>Login</button>
+      {props.error.isRaised && <p style={{backgroundColor: "red", color: "#fff"}}>{props.error.message}</p>}
     </div>
   </>
 }
