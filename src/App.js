@@ -1,14 +1,14 @@
 import './App.css';
-import NavBar from './components/NavBar/NavBar'
+import {NavBar} from './components/NavBar/NavBar'
 import MainContentContainer from "./components/MainContent/MainContent";
 import {BrowserRouter} from "react-router-dom";
-import HeaderContainer from "./components/Header/HeaderContainer";
+import Header from "./components/Header/Header";
 
 function App() {
   return (
     <BrowserRouter>
       <div className='app-wrapper'>
-        <HeaderContainer />
+        <Header />
         <NavBar />
         <MainContentContainer />
       </div>

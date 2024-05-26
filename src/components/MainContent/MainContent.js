@@ -1,3 +1,4 @@
+import React from "react";
 import {connect} from "react-redux";
 import {Route, Routes} from 'react-router-dom'
 
@@ -19,7 +20,7 @@ const MainContent = (props) => {
           {/* Way of adding routes is not matter */}
           <Route element={<Home />} path=""/>
           <Route element={<Home />} path="/home"/>
-          {props.ownProfile.user.isAuthorized && <Route element={<ProfileContainer />} path="/profile"/>}
+          {props.userIsAuthorized && <Route element={<ProfileContainer />} path="/profile"/>}
           <Route element={<ProfileContainer />} path="/profile/:profileId"/>
           <Route element={<Settings />} path="/settings"/>
           <Route element={<MessagesContainer />} path="/messages"/>
@@ -35,7 +36,7 @@ const MainContent = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  ownProfile: state.ownProfile.profile
+  userIsAuthorized: state.ownProfile.profile.user.isAuthorized
 })
 
 const MainContentContainer = connect(mapStateToProps, {})(MainContent)
