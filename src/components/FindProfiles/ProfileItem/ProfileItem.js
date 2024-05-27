@@ -1,6 +1,7 @@
 import styles from "./ProfileItem.module.css"
 import {NavLink} from "react-router-dom"
 import AnonProfileImg from "../../common/AnonProfileImg/AnonProfileImg"
+import {RenderIfAuthorized} from "../../common/RenderIfAuthorized/RenderIfAuthorized";
 
 function ProfileItem(props) {
   return (
@@ -23,9 +24,13 @@ function ProfileItem(props) {
           </div>
         </NavLink>
         <div>
-          <button className={styles.profile_follow_button} onClick={() => props.follow(props.profile.id)}>
-            {props.profile.followed ? "Unfollow" : "Follow"}
-          </button>
+          <RenderIfAuthorized
+            render={
+              <button className={styles.profile_follow_button} onClick={() => props.followUnfollowProfile(props.profile.id, props.profile.followed)}>
+                {props.profile.followed ? "Unfollow" : "Follow"}
+              </button>
+            }
+          />
         </div>
       </div>
   )

@@ -15,7 +15,7 @@ root.render(
         <AppContainer />
       </Provider>
     </CookiesProvider>
-    // </React.StrictMode>
+    // {/*</React.StrictMode>*/}
 )
 
 window.store = store

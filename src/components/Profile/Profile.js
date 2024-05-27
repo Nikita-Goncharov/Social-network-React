@@ -9,7 +9,7 @@ const ProfileInfo = (props) => {
         <div className={styles.profile_img}>
           {
             props.profile_data.img ?
-              <img src={props.profile_data.img} width="300" alt="ProfileItem img"/>
+              <img src={props.profile_data.img} width="300" alt="Profile img"/>
               :
               <AnonProfileImg />
           }

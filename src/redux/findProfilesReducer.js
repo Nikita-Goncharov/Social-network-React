@@ -1,4 +1,5 @@
 const FOLLOW = "FOLLOW"
+const UNFOLLOW = "UNFOLLOW"
 const SET_PROFILES = "SET-PROFILES"
 const TOTAL_PROFILES = "TOTAL-PROFILES"
 const PAGES_COUNT = "PAGES-COUNT"
@@ -16,13 +17,29 @@ const initialState = {
 }
 
 const findProfilesReducer = (state = initialState, action) => {
+  let profilesCopy
   switch(action.type) {
     case FOLLOW:
-      let profilesCopy = [...state.profiles]
+      profilesCopy = [...state.profiles]
 
       profilesCopy = profilesCopy.map(profile => {
         if (profile.id === action.profile_id) {
-          profile.followed = !profile.followed
+          profile.followed = true
+          return {...profile}
+        }
+        return profile
+      })
+
+      return {
+        ...state,
+        profiles: profilesCopy
+      }
+    case UNFOLLOW:
+      profilesCopy = [...state.profiles]
+
+      profilesCopy = profilesCopy.map(profile => {
+        if (profile.id === action.profile_id) {
+          profile.followed = false
           return {...profile}
         }
         return profile
@@ -64,6 +81,10 @@ const findProfilesReducer = (state = initialState, action) => {
 
 export const followProfileAC = (profile_id) => {
   return {type: FOLLOW, profile_id}
+}
+
+export const unfollowProfileAC = (profile_id) => {
+  return {type: UNFOLLOW, profile_id}
 }
 
 // Profiles from API when component loaded

@@ -25,7 +25,7 @@ function Profiles(props) {
             <div className={styles.users_management}>
               <div className={styles.users}>
                 <ul>
-                  {props.profiles.map(profile => <li key={profile.id}><ProfileItem profile={profile} follow={props.follow}/></li>)}
+                  {props.profiles.map(profile => <li key={profile.id}><ProfileItem profile={profile} followUnfollowProfile={props.followUnfollowProfile}/></li>)}
                 </ul>
               </div>
             </div>

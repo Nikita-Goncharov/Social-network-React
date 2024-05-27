@@ -3,7 +3,6 @@ import Post from "./Post/Post"
 import styles from "./Posts.module.css"
 
 const Posts = ({error, newPostTitle, newPostText, posts, addPostCallback, changeNewPostText, changeNewPostTitle, profileIsOwn}) => {
-
   let changeNewPostTextCallback = (e) => {
     changeNewPostText(e.target.value)
   }
