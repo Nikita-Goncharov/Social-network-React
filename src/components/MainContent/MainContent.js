@@ -20,10 +20,14 @@ const MainContent = (props) => {
           {/* Way of adding routes is not matter */}
           <Route element={<Home />} path=""/>
           <Route element={<Home />} path="/home"/>
+
           {props.userIsAuthorized && <Route element={<ProfileContainer />} path="/profile"/>}
+
           <Route element={<ProfileContainer />} path="/profile/:profileId"/>
           <Route element={<Settings />} path="/settings"/>
-          <Route element={<MessagesContainer />} path="/messages"/>
+
+          {props.userIsAuthorized && <Route element={<MessagesContainer />} path="/messages"/>}
+
           <Route element={<FindProfilesContainer />} path="/find-profiles"/>
 
           <Route element={<RegisterUserContainer />} path="/register"/>
