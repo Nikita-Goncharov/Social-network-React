@@ -22,3 +22,12 @@
 .profile .profile_img img {
     width: 100%;
 }
+
+.profile .dialog_button {
+    padding: 10px 20px;
+    font-weight: bold;
+    background-color: #729FCF;
+    color: #EEEEEC;
+    border-radius: 10px;
+    border: none;
+}

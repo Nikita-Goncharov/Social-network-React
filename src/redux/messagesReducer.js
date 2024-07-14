@@ -1,54 +1,60 @@
-const SEND_MESSAGE = "SEND-MESSAGE"
+const ADD_MESSAGE = "ADD-MESSAGE"
+const ADD_DIALOG = "ADD-DIALOG"
 const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT"
-const basic_text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-  Nam arcu velit, dapibus vitae pretium vitae, hendrerit a dolor. Mauris eget dictum arcu.
-  Aenean facilisis aliquam purus.
-  Pellentesque pulvinar, est at blandit egestas, nibh turpis scelerisque ex, nec feugiat ipsum est non tortor.
-  Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut vehicula tortor id ipsum elementum tempus.`
 
 
 const initialState = {
-  messages: [
-    {id: 1, user_name: "Dmitry", text: basic_text},
-    {id: 2, user_name: "Dmitry", text: basic_text},
-    {id: 3, user_name: "Me", text: basic_text},
-    {id: 4, user_name: "Dmitry", text: basic_text},
-    {id: 5, user_name: "Me", text: basic_text},
-  ],
-  dialogs: [
-    {id: 1, name: "Andrew"},
-    {id: 2, name: "Dmitry"},
-    {id: 3, name: "Sasha"},
-    {id: 4, name: "Sveta"},
-    {id: 5, name: "Victor"},
-  ],
+  dialogs: [], // {id, firstProfileId, secondProfileId, dateTime, messages: [{}]}
   newMessageText: ""
 }
 
 
 const messagesReducer = (state=initialState, action) => {
-  if (action.type === SEND_MESSAGE) {
-    const lastMessageId = state.messages[state.messages.length-1].id
-    return {
-      ...state,
-      messages: [...state.messages, {id: lastMessageId+1, user_name: "Me", text: state.newMessageText}],
-      newMessageText: ""
-    }
-  } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
-    return {
-      ...state,
-      newMessageText: action.newText
-    }
-  } else {
-    return state
+  switch (action.type) {
+    case ADD_MESSAGE:
+      const dialogForAddMessage = state.dialogs.find(dialog => dialog.id === action.dialogId)
+      state.dialogs = state.dialogs.filter(dialog => dialog.id !== action.dialogId)
+      dialogForAddMessage.messages = [
+        ...dialogForAddMessage.messages,
+        {id: action.id, text: action.text, dateTime: action.dateTime, ownerProfileId: action.ownerProfileId, dialogId: action.dialogId}
+      ]
+      return {
+        ...state,
+        dialogs: [...state.dialogs, dialogForAddMessage],
+        newMessageText: ""
+      }
+    case ADD_DIALOG:
+      return {
+        ...state,
+        dialogs: [...state.dialogs, {
+          id: action.id,
+          firstProfileId: action.firstProfileId,
+          secondProfileId: action.secondProfileId,
+          dateTime: action.dateTime,
+          messages: []
+        }]
+      }
+    case UPDATE_NEW_MESSAGE_TEXT:
+      return {
+        ...state,
+        newMessageText: action.text
+      }
+    default:
+      return state
   }
 }
 
 
-export const sendMessageActionCreator = () => ({type: SEND_MESSAGE})
+export const addMessageAC = (id, text, dateTime, ownerProfileId, dialogId) => (
+  {type: ADD_MESSAGE, id, text, dateTime, ownerProfileId, dialogId}
+)
 
-export const updateNewMessageTextActionCreator = text => (
-    {type: UPDATE_NEW_MESSAGE_TEXT, newText: text}
+export const addDialogAC = (id, firstProfileId, secondProfileId, dateTime) => ({
+  type: ADD_DIALOG, id, firstProfileId, secondProfileId, dateTime
+})
+// TODO: removeDialogAC
+export const updateNewMessageTextAC = text => (
+    {type: UPDATE_NEW_MESSAGE_TEXT, text}
 )
 
 export default messagesReducer

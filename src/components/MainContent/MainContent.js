@@ -26,7 +26,7 @@ const MainContent = (props) => {
           <Route element={<ProfileContainer />} path="/profile/:profileId"/>
           <Route element={<Settings />} path="/settings"/>
 
-          {props.userIsAuthorized && <Route element={<MessagesContainer />} path="/messages"/>}
+          {props.userIsAuthorized && <Route element={<MessagesContainer />} path="/messages/*"/>}
 
           <Route element={<FindProfilesContainer />} path="/find-profiles"/>
 

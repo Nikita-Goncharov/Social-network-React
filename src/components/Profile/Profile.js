@@ -27,7 +27,7 @@ const ProfileInfo = (props) => {
   )
 }
 
-const Profile = ({error, profile_data, profileIsOwn}) => {
+const Profile = ({startDialog, error, profile_data, profileIsOwn}) => {
   return (  // TODO: more info with exception
       <div className={styles.profile}>
         {
@@ -36,7 +36,8 @@ const Profile = ({error, profile_data, profileIsOwn}) => {
             :
           <>
             <ProfileInfo profile_data={profile_data}/>
-            <PostsContainer className={styles.posts} profileIsOwn={profileIsOwn} />
+            {!profileIsOwn && <button onClick={() => startDialog(profile_data.id)} className={styles.dialog_button}>Start dialog</button>} {/*TODO: change position*/}
+            <PostsContainer profileIsOwn={profileIsOwn} />
           </>
         }
       </div>

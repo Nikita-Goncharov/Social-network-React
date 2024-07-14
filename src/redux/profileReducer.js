@@ -9,7 +9,7 @@ export const imgPath = "https://aui.atlassian.com/aui/8.8/docs/images/avatar-per
 
 const initialState = {
     profile: {
-        id: 0,
+        id: null,
         img: "",
         status: "",
         education: "",
@@ -18,7 +18,7 @@ const initialState = {
         city: "",
         birth_date: "",
         user: {
-            id: 0,
+            id: null,
             username: "",
             email: ""
         }
