@@ -17,11 +17,11 @@ function Profiles(props) {
           })}
         </div>
         {
-          props.error.isRaised ?
+          props.error ?
             <p style={{backgroundColor: "red", color: "#fff"}}>{props.error.message}</p>
             :
           <>
-            {props.isFetching && <Loader />}
+            {props.loading && <Loader />}
             <div className={styles.users_management}>
               <div className={styles.users}>
                 <ul>

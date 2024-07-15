@@ -4,23 +4,27 @@ const SET_PROFILES = "SET-PROFILES"
 const TOTAL_PROFILES = "TOTAL-PROFILES"
 const PAGES_COUNT = "PAGES-COUNT"
 const CURRENT_PAGE = "CURRENT-PAGE"
-const FETCHING = "FETCHING"
+const LOADING = "LOADING"
+const FAILURE = "FAILURE"
 
 
 const initialState = {
-  profiles: [],
-  pagesCount: 0,
-  currentPage: 1,
-  countProfilesOnPage: 10,
-  totalProfiles: 0,
-  isFetching: false
+  data: {
+    profiles: [],
+    pagesCount: 0,
+    currentPage: 1,
+    countProfilesOnPage: 10,
+    totalProfiles: 0,
+  },
+  loading: false,
+  error: null
 }
 
 const findProfilesReducer = (state = initialState, action) => {
   let profilesCopy
   switch(action.type) {
     case FOLLOW:
-      profilesCopy = [...state.profiles]
+      profilesCopy = [...state.data.profiles]
 
       profilesCopy = profilesCopy.map(profile => {
         if (profile.id === action.profile_id) {
@@ -32,10 +36,15 @@ const findProfilesReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        profiles: profilesCopy
+        data: {
+          ...state.data,
+          profiles: profilesCopy
+        },
+        loading: false,
+        error: null
       }
     case UNFOLLOW:
-      profilesCopy = [...state.profiles]
+      profilesCopy = [...state.data.profiles]
 
       profilesCopy = profilesCopy.map(profile => {
         if (profile.id === action.profile_id) {
@@ -47,32 +56,72 @@ const findProfilesReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        profiles: profilesCopy
+        data: {
+          ...state.data,
+          profiles: profilesCopy
+        },
+        loading: false,
+        error: null
       }
     case SET_PROFILES:
       return {
         ...state,
-        profiles: action.profiles
+        data: {
+          ...state.data,
+          profiles: action.profiles
+        },
+        loading: false,
+        error: null
       }
     case PAGES_COUNT:
       return {
         ...state,
-        pagesCount: action.pagesCount
+        data: {
+          ...state.data,
+          pagesCount: action.pagesCount
+        }
       }
     case TOTAL_PROFILES:
       return {
         ...state,
-        totalProfiles: action.count
+        data: {
+          ...state.data,
+          totalProfiles: action.count
+        }
       }
     case CURRENT_PAGE:
       return {
         ...state,
-        currentPage: action.currentPage
+        data: {
+          ...state.data,
+          currentPage: action.currentPage
+        }
       }
-    case FETCHING:
+    case LOADING:
       return {
         ...state,
-        isFetching: action.isFetching
+        data: {
+          profiles: [],
+          pagesCount: 0,
+          currentPage: 1,
+          countProfilesOnPage: 10,
+          totalProfiles: 0,
+        },
+        loading: true,
+        error: null
+      }
+    case FAILURE:
+      return {
+        ...state,
+        data: {
+          profiles: [],
+          pagesCount: 0,
+          currentPage: 1,
+          countProfilesOnPage: 10,
+          totalProfiles: 0,
+        },
+        loading: false,
+        error: new Error(action.message)
       }
     default:
       return state
@@ -104,8 +153,60 @@ export const currentPageAC = (currentPage) => {
   return {type: CURRENT_PAGE, currentPage}
 }
 
-export const fetchingAC = (isFetching) => {
-  return {type: FETCHING, isFetching}
+export const loadingAC = () => ({
+  type: LOADING
+})
+
+export const failureProfilesAC = (message) => ({
+  type: FAILURE, message
+})
+
+
+export const findProfilesThunkCreator = (userIsAuthorized, token, currentPage, countProfilesOnPage) => {
+  return async (dispatch) => {
+    dispatch(loadingAC())
+    let headers = {}
+    if (userIsAuthorized) {
+      headers = {Authorization: token}
+    }
+    const response = await fetch(
+      `http://localhost:8080/api/v0.2/profiles?page=${currentPage}&count=${countProfilesOnPage}`,
+      {headers: headers}
+    )
+
+    if (response.status === 200) {
+      const responseJSON = await response.json()
+      dispatch(setProfilesAC(responseJSON.profiles))
+      dispatch(totalProfilesAC(responseJSON.total_count))
+      dispatch(pagesCountAC(Math.ceil(responseJSON.total_count / countProfilesOnPage)))
+    } else {
+     dispatch(failureProfilesAC("Error. Can`t fetch profiles."))
+    }
+  }
+}
+
+export const followUnfollowProfileThunkCreator = (token, currentFollowingState, profileId) => {
+  return async (dispatch) => {
+    const action = currentFollowingState === true ? "DELETE" : "POST"
+    dispatch(loadingAC())
+    const response = await fetch(
+      "http://localhost:8080/api/v0.2/follow",
+      {
+        method: action,
+        headers: {Authorization: token},
+        body: JSON.stringify({"profile_id": profileId})
+      }
+    )
+    if (response.status === 200) {
+      if (currentFollowingState) {
+        dispatch(unfollowProfileAC(profileId))
+      } else {
+        dispatch(followProfileAC(profileId))
+      }
+    } else {
+      dispatch(failureProfilesAC("Error. Can`t follow or unfollow profile."))
+    }
+  }
 }
 
 
