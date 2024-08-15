@@ -42,7 +42,7 @@ const Messages = ({ dialogs, newMessageText, addMessageCallback, updateNewMessag
           <div className={styles.dialogs}>
             <div className={styles.dialogs_description}><h4>Dialogs</h4></div>
             <ul className={styles.dialogs_list}>
-              {dialogs.map(({id, firstProfileId, secondProfileId, dateTime}) => {
+              {dialogs.length && dialogs.map(({id, firstProfileId, secondProfileId, dateTime}) => {
                   return (
                     <DialogLink key={id} id={id} firstProfileId={firstProfileId} secondProfileId={secondProfileId} dateTime={dateTime}/>
                   )
@@ -50,6 +50,7 @@ const Messages = ({ dialogs, newMessageText, addMessageCallback, updateNewMessag
             </ul>
           </div>
           <div className={styles.message_bar}>
+            {dialogs.length &&
             <Routes>
               <Route path=":dialogId" element={
                 <MessagesItemsWithParams
@@ -59,7 +60,7 @@ const Messages = ({ dialogs, newMessageText, addMessageCallback, updateNewMessag
                   dialogs={dialogs}
                 />
               }></Route>
-            </Routes>
+            </Routes>}
           </div>
         </div>
       </>
