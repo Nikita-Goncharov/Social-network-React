@@ -6,8 +6,6 @@ import customWithParams from "../common/customWithParams/customWithParams"
 import {addDialogAC} from "../../redux/messagesReducer";
 
 function ProfileAPIContainer(props) {
-    const [error, setError] = useState({isRaised: false, message: ""})
-
     useEffect(() => {
         const loadProfile = async () => {
             let profileId = props.params.profileId
@@ -15,7 +13,7 @@ function ProfileAPIContainer(props) {
                 if (props.ownProfile.user.isAuthorized) {
                     profileId = props.ownProfile.id
                 } else {
-                    setError({isRaised: true, message: "Error. There is no profile with that id."})
+                    // TODO: error // setError({isRaised: true, message: "Error. There is no profile with that id."})
                 }
             }
 
@@ -40,13 +38,11 @@ function ProfileAPIContainer(props) {
 
                 props.setProfile(user_data, profile_data)
             } else {
-                setError({isRaised: true, message: "Error. Can`t fetch profile."})
+                // TODO: error // setError({isRaised: true, message: "Error. Can`t fetch profile."})
             }
         }
-        if (!error.isRaised) {
-            loadProfile()
-        }
-    }, []);
+        loadProfile()
+    }, [])
 
     let profileIsOwn
     if (props.params.profileId) {
@@ -55,7 +51,7 @@ function ProfileAPIContainer(props) {
         profileIsOwn = true
     }
 
-    function startDialog(profileId) {
+    function createDialog(profileId) {
         if (props.ownProfile.user.isAuthorized) {
             fetch(
               "http://localhost:8080/api/v0.2/dialogs",
@@ -78,12 +74,12 @@ function ProfileAPIContainer(props) {
         }
     }
 
-    return <Profile startDialog={startDialog} error={error} profile_data={props.profile} profileIsOwn={profileIsOwn}/>
+    return <Profile createDialog={createDialog} profile_data={props.profile} profileIsOwn={profileIsOwn}/>  // error={error}
 }
 
 const mapStateToProps = (state) => (
     {
-        profile: state.profilePage.profile,
+        profile: state.profilePage.data.profile,
         ownProfile: state.ownProfile.profile
     }
 )
