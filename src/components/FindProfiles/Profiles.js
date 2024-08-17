@@ -9,29 +9,33 @@ function Profiles(props) {
     pagesList.push(i)
   }
   return (
-      <>
-        <h2 className={styles.page_description}>Profiles</h2>
-        <div className={styles.pagination_menu}>
-          {pagesList.map(page => {
-            return <span key={page} className={props.currentPage === page ? styles.activePage : styles.ordinaryPage} onClick={() => props.changeCurrentPage(page)}>{page}</span>
-          })}
-        </div>
-        {
-          props.error ?
-            <p style={{backgroundColor: "red", color: "#fff"}}>{props.error.message}</p>
-            :
+    <>
+      <h2 className={styles.page_description}>Profiles</h2>
+      <div className={styles.pagination_menu}>
+        {pagesList.map(page => {
+          return <span key={page} className={props.currentPage === page ? styles.activePage : styles.ordinaryPage}
+                       onClick={() => props.changeCurrentPage(page)}>{page}</span>
+        })}
+      </div>
+      {
+        props.error ?
+          <p style={{backgroundColor: "red", color: "#fff"}}>{props.error.message}</p>
+          :
           <>
-            {props.loading && <Loader />}
+            {props.loading && <Loader/>}
             <div className={styles.users_management}>
               <div className={styles.users}>
                 <ul>
-                  {props.profiles.map(profile => <li key={profile.id}><ProfileItem profile={profile} followUnfollowProfile={props.followUnfollowProfile}/></li>)}
+                  {props.profiles.map(profile => <li key={profile.id}><ProfileItem profile={profile}
+                                                                                   ownProfile={props.ownProfile}
+                                                                                   followUnfollowProfile={props.followUnfollowProfile}/>
+                  </li>)}
                 </ul>
               </div>
             </div>
           </>
-        }
-      </>
+      }
+    </>
   )
 }
 

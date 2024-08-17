@@ -3,7 +3,7 @@ import Profile from "./Profile";
 import {getProfileThunkCreator} from "../../redux/profileReducer";
 import {connect} from "react-redux";
 import customWithParams from "../common/customWithParams/customWithParams"
-import {addDialogAC} from "../../redux/messagesReducer";
+import {createDialogThunkCreator} from "../../redux/messagesReducer";
 
 function ProfileAPIContainer(props) {
   useEffect(() => {
@@ -25,31 +25,7 @@ function ProfileAPIContainer(props) {
     profileIsOwn = true
   }
 
-  function createDialog(profileId) {  // TODO: addDialog -> thunk creator
-    if (props.ownProfile.user.isAuthorized) {
-      fetch(
-        "http://localhost:8080/api/v0.2/dialogs",
-        {
-          method: "POST",
-          headers: {Authorization: props.ownProfile.user.token},
-          body: JSON.stringify({profile_id: profileId})
-        }
-      ).then(response => {
-        if (response.status === 200) {
-          return response.json()
-        } else {
-          // TODO: error
-        }
-      }).then(responseJSON => {
-        props.addDialog(
-          responseJSON.dialog.id,
-          responseJSON.dialog.first_profile,
-          responseJSON.dialog.second_profile,
-          responseJSON.dialog.created
-        )
-      })
-    }
-  }
+  const createDialog = () => props.createDialog(props.profile.id, props.ownProfile.user.isAuthorized, props.ownProfile.user.token)
 
   return <Profile
     error={props.profile_error}
@@ -71,7 +47,7 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = (dispatch) => (
   {
     getProfile: (profileId) => dispatch(getProfileThunkCreator(profileId)),
-    addDialog: (id, firstProfileId, secondProfileId, dateTime) => dispatch(addDialogAC(id, firstProfileId, secondProfileId, dateTime)),
+    createDialog: (profileId, isAuthorized, token) => dispatch(createDialogThunkCreator(profileId, isAuthorized, token)),
   }
 )
 

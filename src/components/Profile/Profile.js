@@ -37,8 +37,10 @@ const Profile = ({createDialog, error, profile_data, profileIsOwn}) => {
           <>
             <ProfileInfo profile_data={profile_data}/>
             {!profileIsOwn &&
-              <button onClick={() => createDialog(profile_data.id)} className={styles.dialog_button}>Start
-                dialog</button>} {/*TODO: change position*/}
+              <button
+                onClick={createDialog}
+                className={styles.dialog_button}
+              >Start dialog</button>} {/*TODO: change position*/}
             <PostsContainer profileIsOwn={profileIsOwn}/>
           </>
       }

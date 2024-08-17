@@ -22,7 +22,7 @@ const initialState = {
 }
 
 
-const messagesReducer = (state=initialState, action) => {
+const messagesReducer = (state = initialState, action) => {
   let dialogsWithoutMessages
 
   switch (action.type) {
@@ -31,7 +31,13 @@ const messagesReducer = (state=initialState, action) => {
       state.dialogs = state.data.dialogs.filter(dialog => dialog.id !== action.dialogId)
       dialogForAddMessage.messages = [
         ...dialogForAddMessage.messages,
-        {id: action.id, text: action.text, dateTime: action.dateTime, ownerProfileId: action.ownerProfileId, dialogId: action.dialogId}
+        {
+          id: action.id,
+          text: action.text,
+          dateTime: action.dateTime,
+          ownerProfileId: action.ownerProfileId,
+          dialogId: action.dialogId
+        }
       ]
       return {
         ...state,
@@ -127,7 +133,7 @@ export const removeDialogAC = (id) => ({
 })
 
 export const updateNewMessageTextAC = text => (
-    {type: UPDATE_NEW_MESSAGE_TEXT, text}
+  {type: UPDATE_NEW_MESSAGE_TEXT, text}
 )
 
 export const loadingDialogsAC = () => ({type: LOADING_DIALOGS})
@@ -187,10 +193,34 @@ export const createMessageThunkCreator = (token, text, dialogId) => async (dispa
   )
   if (response.status === 200) {
     const responseJSON = await response.json()
-    const {id:messageId, created:dateTime, owner:ownProfileId} = responseJSON.profile_message
+    const {id: messageId, created: dateTime, owner: ownProfileId} = responseJSON.profile_message
     dispatch(addMessageAC(messageId, text, dateTime, ownProfileId, dialogId))
   } else {
     // dispatch(failureMessagesAC())
+  }
+}
+
+export const createDialogThunkCreator = (profileId, isAuthorized, token) => async (dispatch) => {
+  // dispatch(loadingMessagesAC())
+  if (isAuthorized) {
+    const response = await fetch(
+      "http://localhost:8080/api/v0.2/dialogs",
+      {
+        method: "POST",
+        headers: {Authorization: token},
+        body: JSON.stringify({profile_id: profileId})
+      })
+    if (response.status === 200) {
+      const responseJSON = await response.json()
+      dispatch(addDialogAC(
+        responseJSON.dialog.id,
+        responseJSON.dialog.first_profile,
+        responseJSON.dialog.second_profile,
+        responseJSON.dialog.created
+      ))
+    } else {
+      dispatch(failureMessagesAC("Error. Can`t create dialog"))
+    }
   }
 }
 

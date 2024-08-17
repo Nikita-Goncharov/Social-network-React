@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect} from "react"
 import {connect} from "react-redux";
 
 import Profiles from "./Profiles";
@@ -19,20 +19,20 @@ function FindProfilesAPIContainer(props) {
     props.findProfilesThunk(props.userIsAuthorized, props.token, currentPage, props.countProfilesOnPage)
   }
 
-  async function followUnfollowProfile(profileId, currentFollowingState) {
+  function followUnfollowProfile(profileId, currentFollowingState) {
     props.followUnfollowProfileThunk(props.token, currentFollowingState, profileId)
   }
 
-
   return <Profiles
-          error={props.error}
-          loading={props.loading}
-          changeCurrentPage={changeCurrentPage}
-          currentPage={props.currentPage}
-          pagesCount={props.pagesCount}
-          profiles={props.profiles}
-          followUnfollowProfile={followUnfollowProfile}
-      />
+    error={props.error}
+    ownProfile={props.ownProfile}
+    loading={props.loading}
+    changeCurrentPage={changeCurrentPage}
+    currentPage={props.currentPage}
+    pagesCount={props.pagesCount}
+    profiles={props.profiles}
+    followUnfollowProfile={followUnfollowProfile}
+  />
 }
 
 
@@ -46,6 +46,7 @@ const mapStateToProps = (state) => {
     loading: state.findProfiles.loading,
     error: state.findProfiles.error,
     userIsAuthorized: state.ownProfile.profile.user.isAuthorized,
+    ownProfile: state.ownProfile.profile,  // TODO: refactor, create container for ProfileItem
     token: state.ownProfile.profile.user.token
   }
 }
