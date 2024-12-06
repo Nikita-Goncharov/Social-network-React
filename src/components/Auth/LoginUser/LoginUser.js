@@ -16,7 +16,7 @@ function LoginUser(props) {
       <input onChange={updateInputValuesCallback} type="password" name="password" placeholder="Password"
              value={props.password}/>
       <button onClick={props.loginUserAPICall}>Login</button>
-      {props.error.isRaised && <p style={{backgroundColor: "red", color: "#fff"}}>{props.error.message}</p>}
+      {/*{props.error.isRaised && <p style={{backgroundColor: "red", color: "#fff"}}>{props.error.message}</p>}*/}
     </div>
   </>
 }

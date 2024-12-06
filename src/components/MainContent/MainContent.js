@@ -15,32 +15,32 @@ import RegisterUserContainer from "../Auth/RegisterUser/RegisterUserContainer";
 
 const MainContent = (props) => {
   return (
-      <div className={styles.main_content}>
-        <Routes>
-          {/* Way of adding routes is not matter */}
-          <Route element={<Home />} path=""/>
-          <Route element={<Home />} path="/home"/>
+    <div className={styles.main_content}>
+      <Routes>
+        {/* Way of adding routes is not matter */}
+        <Route element={<Home/>} path=""/>
+        <Route element={<Home/>} path="/home"/>
 
-          {props.userIsAuthorized && <Route element={<ProfileContainer />} path="/profile"/>}
+        {props.userIsAuthorized && <Route element={<ProfileContainer/>} path="/profile"/>}
 
-          <Route element={<ProfileContainer />} path="/profile/:profileId"/>
-          <Route element={<Settings />} path="/settings"/>
+        <Route element={<ProfileContainer/>} path="/profile/:profileId"/>
+        <Route element={<Settings/>} path="/settings"/>
 
-          {props.userIsAuthorized && <Route element={<MessagesContainer />} path="/messages/*"/>}
+        {props.userIsAuthorized && <Route element={<MessagesContainer/>} path="/messages/*"/>}
 
-          <Route element={<FindProfilesContainer />} path="/find-profiles"/>
+        <Route element={<FindProfilesContainer/>} path="/find-profiles"/>
 
-          <Route element={<RegisterUserContainer />} path="/register"/>
-          <Route element={<LoginUserContainer />} path="/login"/>
-          <Route element={<LogoutUserContainer />} path="/logout"/>
-          <Route element={<Page404 />} path="*"/>
-        </Routes>
-      </div>
+        <Route element={<RegisterUserContainer/>} path="/register"/>
+        <Route element={<LoginUserContainer/>} path="/login"/>
+        <Route element={<LogoutUserContainer/>} path="/logout"/>
+        <Route element={<Page404/>} path="*"/>
+      </Routes>
+    </div>
   )
 }
 
 const mapStateToProps = (state) => ({
-  userIsAuthorized: state.ownProfile.profile.user.isAuthorized
+  userIsAuthorized: state.ownProfile.data.profile.user.isAuthorized
 })
 
 const MainContentContainer = connect(mapStateToProps, {})(MainContent)

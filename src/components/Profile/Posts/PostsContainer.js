@@ -13,7 +13,7 @@ function PostsContainerAPI(props) {
   useEffect(() => {
     props.loadPosts(props.profileId)
   }, [props.profileId])
-  
+
   return <Posts error={props.posts_error} addPostCallback={props.createPost} {...props} />
 }
 
@@ -27,7 +27,7 @@ const mapStateToProps = (state, ownProps) => {
     posts: state.profilePage.data.posts,
 
     profileId: state.profilePage.data.profile.id,
-    ownProfile: state.ownProfile.profile,
+    ownProfile: state.ownProfile.data.profile,
     profileIsOwn: ownProps.profileIsOwn
   }
 }

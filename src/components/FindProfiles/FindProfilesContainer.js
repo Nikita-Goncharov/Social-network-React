@@ -45,9 +45,9 @@ const mapStateToProps = (state) => {
     countProfilesOnPage: state.findProfiles.data.countProfilesOnPage,
     loading: state.findProfiles.loading,
     error: state.findProfiles.error,
-    userIsAuthorized: state.ownProfile.profile.user.isAuthorized,
-    ownProfile: state.ownProfile.profile,  // TODO: refactor, create container for ProfileItem
-    token: state.ownProfile.profile.user.token
+    userIsAuthorized: state.ownProfile.data.profile.user.isAuthorized,
+    ownProfile: state.ownProfile.data.profile,  // TODO: refactor, create container for ProfileItem
+    token: state.ownProfile.data.profile.user.token
   }
 }
 

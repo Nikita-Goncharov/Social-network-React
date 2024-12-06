@@ -10,7 +10,7 @@ function RenderIfAuthorizedComponent(props) {
 
 
 const mapStateToProps = (state, ownProps) => ({
-  isAuthorized: state.ownProfile.profile.user.isAuthorized,
+  isAuthorized: state.ownProfile.data.profile.user.isAuthorized,
   render: ownProps.render,
   elseRender: ownProps.elseRender || <></>
 })

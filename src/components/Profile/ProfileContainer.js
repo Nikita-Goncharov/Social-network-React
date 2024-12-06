@@ -40,7 +40,7 @@ const mapStateToProps = (state) => (
     profile: state.profilePage.data.profile,
     profile_loading: state.profilePage.loading,
     profile_error: state.profilePage.error,
-    ownProfile: state.ownProfile.profile
+    ownProfile: state.ownProfile.data.profile
   }
 )
 

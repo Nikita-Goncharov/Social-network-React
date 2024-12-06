@@ -2,50 +2,22 @@ import App from "./App";
 import {useCookies} from "react-cookie";
 import {connect} from "react-redux";
 import {useEffect} from "react";
-import {loginAC} from "./redux/ownProfileReducer";
+import {getUserDataThunkCreator} from "./redux/ownProfileReducer";
 
 
 // App container for check if in cookies exists user token and if exists, then load his data
 function AppContainerLoginUser(props) {
   const [cookies, setCookie] = useCookies()
-  useEffect(  () => {
+  useEffect(() => {
     if (cookies.hasOwnProperty("Authorization")) {
-      let userAuthToken = cookies.Authorization
-      async function setUserDataIfLogged() {
-        let responseWhoAmI = await fetch(
-          "http://localhost:8080/api/v0.2/whoami",
-          {headers: {"Authorization": userAuthToken}}
-        )
-
-        if (responseWhoAmI.status === 200) {
-          let responseWhoAmIBody = await responseWhoAmI.json()
-          const user_data = {
-            profile_id: responseWhoAmIBody.profile.user.id,
-            username: responseWhoAmIBody.profile.user.username,
-            email: responseWhoAmIBody.profile.user.email,
-            token: responseWhoAmIBody.profile.user.token
-          }
-          const profile_data = {
-            profile_id: responseWhoAmIBody.profile.id,
-            img: responseWhoAmIBody.profile.img,
-            status: responseWhoAmIBody.profile.status,
-            education: responseWhoAmIBody.profile.education,
-            web_site: responseWhoAmIBody.profile.web_site,
-            country: responseWhoAmIBody.profile.country,
-            city: responseWhoAmIBody.profile.city,
-            birth_date: responseWhoAmIBody.profile.birth_date
-          }
-          props.loginUser(user_data, profile_data)
-        }
-      }
-      setUserDataIfLogged()
+      props.getUserData(cookies.Authorization)
     }
   }, [])
-  return <App />
+  return <App/>
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  loginUser: (user_data, profile_data) => dispatch(loginAC(user_data, profile_data))
+  getUserData: (token) => dispatch(getUserDataThunkCreator(token))
 })
 
 export default connect(null, mapDispatchToProps)(AppContainerLoginUser)
